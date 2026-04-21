@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
+@custom-variant dark (&);
+
 @theme {
-  /* Custom colors */
+  /* Custom colors - Light Mode */
   --color-background: #F8FAFC;
   --color-surface: #FFFFFF;
   --color-muted-surface: #F1F5F9;
@@ -17,6 +19,20 @@
 
   /* Custom font */
   --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Source Code Pro', 'Roboto Mono', monospace;
+
+  /* Dark Mode Colors */
+  --color-dark-background: #020617;
+  --color-dark-surface: #0F172A;
+  --color-dark-muted-surface: #1E293B;
+  --color-dark-primary-text: #E2E8F0;
+  --color-dark-secondary-text: #94A3B8;
+  --color-dark-disabled-text: #475569;
+  --color-dark-primary-blue: #3B82F6;
+  --color-dark-secondary-green: #22C55E;
+  --color-dark-accent-yellow: #FDE047;
+  --color-dark-hover-blue: #60A5FA;
+  --color-dark-hover-green: #4ADE80;
+  --color-dark-soft-yellow-bg: #713F12;
 }
 
 /* Force vertical layout for main content wrapper */
@@ -162,8 +178,17 @@ a:hover {
   transition: border-color 0.2s ease;
 }
 
+.dark .card {
+  background-color: var(--dark-surface);
+  border-color: var(--dark-muted-surface);
+}
+
 .card:hover {
   border-color: var(--primary-blue);
+}
+
+.dark .card:hover {
+  border-color: var(--dark-primary-blue);
 }
 
 /* Container */
