@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="min-h-screen flex flex-col">
+    <header class="bg-surface border-b border-gray-200">
+      <div class="container">
+        <nav class="flex items-center justify-between py-4">
+          <a href="/" class="text-xl font-bold">Jorge GB</a>
+          <ul class="flex gap-6">
+            <li><a href="/" class="hover:underline transition-colors">Home</a></li>
+            <li><a href="/wishlist" class="hover:underline transition-colors">Wishlist</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="section bg-muted-surface">
+        <div class="container">
+          <h1 class="text-4xl font-bold text-center mb-4">Wishlist</h1>
+          <p class="text-center text-secondary-text mb-12">
+            Products I'm saving up for. Your support helps make these happen!
+          </p>
+          
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div class="card text-center p-4">
+              <h3 class="text-sm font-semibold mb-2">Xiaomi Light Bar</h3>
+              <a href="https://www.amazon.de/Xiaomi-Computer-Lichtleiste-regulierbare-Farbtemperatur/dp/B08W2C5W59" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+            </div>
+            
+            <div class="card text-center p-4">
+              <h3 class="text-sm font-semibold mb-2">Xiaomi Speaker</h3>
+              <a href="https://www.mi.com/de/product/xiaomi-desktop-speaker/" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+            </div>
+            
+            <div class="card text-center p-4">
+              <h3 class="text-sm font-semibold mb-2">KZZI I75 Keyboard</h3>
+              <a href="https://www.kzzistore.com/products/kzzi-i75-low-profile-mechanical-keyboard?variant=50794998858006" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+            </div>
+            
+            <div class="card text-center p-4">
+              <h3 class="text-sm font-semibold mb-2">Magic Trackpad</h3>
+              <a href="https://www.apple.com/de/shop/product/mxk93z/a/magic-trackpad-usb-c-weisse-multi-touch-oberflache" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-surface border-t border-gray-200" style="padding-top: 1rem; padding-bottom: 1rem;">
+      <div class="container text-center">
+        <p class="text-secondary-text">
+          &copy; {new Date().getFullYear()} Jorge Garcia Brizuela. All rights reserved.
+        </p>
+        <p class="text-secondary-text">
+          Built with Astro, React, and TypeScript
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>

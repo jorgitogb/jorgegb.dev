@@ -1,0 +1,70 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="min-h-screen flex flex-col">
+    <header class="bg-surface border-b border-gray-200">
+      <div class="container">
+        <nav class="flex items-center justify-between py-4">
+          <a href="/" class="text-xl font-bold">Jorge GB</a>
+          <ul class="flex gap-6">
+            <li><a href="/" class="hover:underline transition-colors">Home</a></li>
+            <li><a href="/publications" class="hover:underline transition-colors">Publications</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="section bg-surface">
+        <div class="container">
+          <h1 class="text-4xl font-bold text-center mb-4">Scientific Publications</h1>
+          <p class="text-center text-secondary-text mb-12">
+            A collection of my research work in plant science and bioinformatics.
+          </p>
+          
+          <div class="space-y-6 max-w-4xl mx-auto">
+            <div class="card">
+              <h3 class="text-xl font-semibold mb-2">A roadmap for a middleware as a federation service for integrative data retrieval of agricultural data</h3>
+              <p class="text-secondary-text mb-2">Journal of Integrative Bioinformatics, 2024</p>
+              <p class="mb-4">
+                A comprehensive roadmap for developing middleware solutions enabling federated access to agricultural research data.
+              </p>
+              <a href="https://doi.org/10.1515/jib-2024-0027" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
+            </div>
+            
+            <div class="card">
+              <h3 class="text-xl font-semibold mb-2">A dynamical systems approach for pineapple cryopreservation analysis</h3>
+              <p class="text-secondary-text mb-2">IFAC-PapersOnLine, 2019</p>
+              <p class="mb-4">
+                Application of dynamical systems methodology to analyze and optimize cryopreservation protocols for pineapple cultures.
+              </p>
+              <a href="https://doi.org/10.1016/j.ifacol.2019.06.072" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
+            </div>
+             
+            <div class="card">
+              <h3 class="text-xl font-semibold mb-2">Accessing to the Nicotiana tabacum leaf antimicrobial activity: In-silico and in-vitro investigations</h3>
+              <p class="text-secondary-text mb-2">Plant Physiology and Biochemistry, 2019</p>
+              <p class="mb-4">
+                Computational and experimental investigation of antimicrobial properties in tobacco leaf tissues.
+              </p>
+              <a href="https://doi.org/10.1016/j.plaphy.2019.04.015" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-surface border-t border-gray-200" style="padding-top: 1rem; padding-bottom: 1rem;">
+      <div class="container text-center">
+        <p class="text-secondary-text">
+          &copy; {new Date().getFullYear()} Jorge Garcia Brizuela. All rights reserved.
+        </p>
+        <p class="text-secondary-text">
+          Built with Astro, React, and TypeScript
+        </p>
+      </div>
+    </footer>
+  </div>
+</Layout>
