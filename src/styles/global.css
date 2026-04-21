@@ -1,5 +1,31 @@
 @import "tailwindcss";
 
+@theme {
+  /* Custom colors */
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-muted-surface: #F1F5F9;
+  --color-primary-text: #0F172A;
+  --color-secondary-text: #475569;
+  --color-disabled-text: #94A3B8;
+  --color-primary-blue: #2563EB;
+  --color-secondary-green: #16A34A;
+  --color-accent-yellow: #FACC15;
+  --color-hover-blue: #1D4ED8;
+  --color-hover-green: #15803D;
+  --color-soft-yellow-bg: #FEF9C3;
+
+  /* Custom font */
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Source Code Pro', 'Roboto Mono', monospace;
+}
+
+/* Force vertical layout for main content wrapper */
+.min-h-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 /* Styles for the personal website */
 
 /* Color Variables */
