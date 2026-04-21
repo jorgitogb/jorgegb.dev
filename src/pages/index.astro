@@ -45,7 +45,6 @@ import Layout from '../layouts/Layout.astro';
               <li><a href="#projects" class="block hover:underline transition-colors">Projects</a></li>
               <li><a href="#publications" class="block hover:underline transition-colors">Publications</a></li>
               <li><a href="#connect" class="block hover:underline transition-colors">Connect</a></li>
-              <li><a href="#wishlist" class="block hover:underline transition-colors">Wishlist</a></li>
             </ul>
           </nav>
         </div>
@@ -335,7 +334,7 @@ import Layout from '../layouts/Layout.astro';
                     Buy Me A Coffee
                   </a>
 
-                  <a href="#" class="btn btn-secondary w-full flex items-center justify-center gap-2">
+                  <a href="#wishlist" class="btn btn-secondary w-full flex items-center justify-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <path d="M12 8v4"></path>
@@ -357,42 +356,61 @@ import Layout from '../layouts/Layout.astro';
             </p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div class="card text-center p-4">
-                <img 
-                  src="https://m.media-amazon.com/images/I/61xJcNKKLXL._AC_SX679_.jpg" 
-                  alt="Xiaomi Computer Light Bar" 
-                  class="w-full h-32 object-contain mb-4 mx-auto"
-                >
-                <h3 class="text-sm font-semibold">Xiaomi Computer Light Bar</h3>
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                  </svg>
+                </div>
+                <h3 class="text-sm font-semibold">Xiaomi Light Bar</h3>
                 <a href="https://www.amazon.de/Xiaomi-Computer-Lichtleiste-regulierbare-Farbtemperatur/dp/B08W2C5W59" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
               </div>
               
               <div class="card text-center p-4">
-                <img 
-                  src="https://i05.appmifile.com/850_item_de/06/12/2024/591caf8875fd594990dbb883d9ca35d4.png" 
-                  alt="Xiaomi Desktop Speaker" 
-                  class="w-full h-32 object-contain mb-4 mx-auto"
-                >
-                <h3 class="text-sm font-semibold">Xiaomi Desktop Speaker</h3>
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-secondary-green flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </div>
+                <h3 class="text-sm font-semibold">Xiaomi Speaker</h3>
                 <a href="https://www.mi.com/de/product/xiaomi-desktop-speaker/" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
               </div>
               
               <div class="card text-center p-4">
-                <img 
-                  src="https://www.kzzistore.com/cdn/shop/files/kzzi_i75v2_white_rgb_keyboard.jpg" 
-                  alt="KZZI I75 Keyboard" 
-                  class="w-full h-32 object-contain mb-4 mx-auto"
-                >
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-accent-yellow flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+                    <path d="M6 8h.01"></path>
+                    <path d="M10 8h.01"></path>
+                    <path d="M14 8h.01"></path>
+                    <path d="M18 8h.01"></path>
+                    <path d="M6 12h.01"></path>
+                    <path d="M18 12h.01"></path>
+                    <path d="M6 16h12"></path>
+                  </svg>
+                </div>
                 <h3 class="text-sm font-semibold">KZZI I75 Keyboard</h3>
                 <a href="https://www.kzzistore.com/products/kzzi-i75-low-profile-mechanical-keyboard?variant=50794998858006" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
               </div>
               
               <div class="card text-center p-4">
-                <img 
-                  src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MXK93?wid=400&hei=400&fmt=jpeg" 
-                  alt="Apple Magic Trackpad" 
-                  class="w-full h-32 object-contain mb-4 mx-auto"
-                >
-                <h3 class="text-sm font-semibold">Apple Magic Trackpad</h3>
+                <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2"></path>
+                    <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                    <path d="M8 12h8"></path>
+                    <path d="M12 8v8"></path>
+                  </svg>
+                </div>
+                <h3 class="text-sm font-semibold">Magic Trackpad</h3>
                 <a href="https://www.apple.com/de/shop/product/mxk93z/a/magic-trackpad-usb-c-weisse-multi-touch-oberflache" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
               </div>
             </div>
