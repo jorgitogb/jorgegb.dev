@@ -4,35 +4,37 @@
 
 @theme {
   /* Custom colors - Light Mode */
-  --color-background: #F8FAFC;
-  --color-surface: #FFFFFF;
-  --color-muted-surface: #F1F5F9;
-  --color-primary-text: #0F172A;
-  --color-secondary-text: #475569;
-  --color-disabled-text: #94A3B8;
-  --color-primary-blue: #2563EB;
-  --color-secondary-green: #16A34A;
-  --color-accent-yellow: #FACC15;
-  --color-hover-blue: #1D4ED8;
-  --color-hover-green: #15803D;
-  --color-soft-yellow-bg: #FEF9C3;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-muted-surface: #f1f5f9;
+  --color-primary-text: #0f172a;
+  --color-secondary-text: #6b7280;
+  --color-disabled-text: #94a3b8;
+  --color-primary-blue: #2563eb;
+  --color-secondary-green: #16a34a;
+  --color-accent-yellow: #facc15;
+  --color-hover-blue: #1d4ed8;
+  --color-hover-green: #15803d;
+  --color-soft-yellow-bg: #fef9c3;
 
   /* Custom font */
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Source Code Pro', 'Roboto Mono', monospace;
+  --font-mono:
+    "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+    "Source Code Pro", "Roboto Mono", monospace;
 
   /* Dark Mode Colors */
   --color-dark-background: #020617;
-  --color-dark-surface: #0F172A;
-  --color-dark-muted-surface: #1E293B;
-  --color-dark-primary-text: #E2E8F0;
-  --color-dark-secondary-text: #94A3B8;
+  --color-dark-surface: #0f172a;
+  --color-dark-muted-surface: #1e293b;
+  --color-dark-primary-text: #e2e8f0;
+  --color-dark-secondary-text: #9ca3af;
   --color-dark-disabled-text: #475569;
-  --color-dark-primary-blue: #3B82F6;
-  --color-dark-secondary-green: #22C55E;
-  --color-dark-accent-yellow: #FDE047;
-  --color-dark-hover-blue: #60A5FA;
-  --color-dark-hover-green: #4ADE80;
-  --color-dark-soft-yellow-bg: #713F12;
+  --color-dark-primary-blue: #3b82f6;
+  --color-dark-secondary-green: #22c55e;
+  --color-dark-accent-yellow: #fde047;
+  --color-dark-hover-blue: #60a5fa;
+  --color-dark-hover-green: #4ade80;
+  --color-dark-soft-yellow-bg: #713f12;
 }
 
 /* Force vertical layout for main content wrapper */
@@ -47,22 +49,22 @@
 /* Color Variables */
 :root {
   /* Light Mode */
-  --background: #F8FAFC;
-  --surface: #FFFFFF;
-  --muted-surface: #F1F5F9;
-  --primary-text: #0F172A;
-  --secondary-text: #475569;
-  --disabled-text: #94A3B8;
-  
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --muted-surface: #f1f5f9;
+  --primary-text: #0f172a;
+  --secondary-text: #6b7280;
+  --disabled-text: #94a3b8;
+
   /* Brand Colors */
-  --primary-blue: #2563EB;
-  --secondary-green: #16A34A;
-  --accent-yellow: #FACC15;
-  
+  --primary-blue: #2563eb;
+  --secondary-green: #16a34a;
+  --accent-yellow: #facc15;
+
   /* Hover States */
-  --hover-blue: #1D4ED8;
-  --hover-green: #15803D;
-  --soft-yellow-bg: #FEF9C3;
+  --hover-blue: #1d4ed8;
+  --hover-green: #15803d;
+  --soft-yellow-bg: #fef9c3;
 }
 
 /* Dark Mode */
@@ -70,21 +72,21 @@
   :root {
     /* Dark Mode */
     --background: #020617;
-    --surface: #0F172A;
-    --muted-surface: #1E293B;
-    --primary-text: #E2E8F0;
-    --secondary-text: #94A3B8;
+    --surface: #0f172a;
+    --muted-surface: #1e293b;
+    --primary-text: #e2e8f0;
+    --secondary-text: #9ca3af;
     --disabled-text: #475569;
-    
+
     /* Brand Colors (brighter for contrast) */
-    --primary-blue: #3B82F6;
-    --secondary-green: #22C55E;
-    --accent-yellow: #FDE047;
-    
+    --primary-blue: #3b82f6;
+    --secondary-green: #22c55e;
+    --accent-yellow: #fde047;
+
     /* Hover States */
-    --hover-blue: #60A5FA;
-    --hover-green: #4ADE80;
-    --soft-yellow-bg: #713F12;
+    --hover-blue: #60a5fa;
+    --hover-green: #4ade80;
+    --soft-yellow-bg: #713f12;
   }
 }
 
@@ -98,13 +100,22 @@
 body {
   background-color: var(--background);
   color: var(--primary-text);
-  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Source Code Pro', 'Roboto Mono', monospace;
+  font-family:
+    "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+    "Source Code Pro", "Roboto Mono", monospace;
   line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-bottom: 0.5rem;
   font-weight: 600;
   line-height: 1.2;
@@ -211,7 +222,7 @@ a:hover {
 }
 
 .section-title::after {
-  content: '';
+  content: "";
   display: block;
   width: 3rem;
   height: 2px;
@@ -283,9 +294,15 @@ a:hover {
   border-radius: 0;
 }
 
-.terminal-dot.red { background-color: #ff5f56; }
-.terminal-dot.yellow { background-color: #ffbd2e; }
-.terminal-dot.green { background-color: #27c93f; }
+.terminal-dot.red {
+  background-color: #ff5f56;
+}
+.terminal-dot.yellow {
+  background-color: #ffbd2e;
+}
+.terminal-dot.green {
+  background-color: #27c93f;
+}
 
 /* Command prompt style */
 .prompt {
@@ -294,13 +311,16 @@ a:hover {
 }
 
 .prompt::before {
-  content: '$ ';
+  content: "$ ";
   color: var(--secondary-text);
 }
 
 /* Code/block styling */
-code, pre {
-  font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Source Code Pro', 'Roboto Mono', monospace;
+code,
+pre {
+  font-family:
+    "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+    "Source Code Pro", "Roboto Mono", monospace;
   background-color: var(--muted-surface);
   padding: 0.25rem 0.5rem;
   border-radius: 0;
