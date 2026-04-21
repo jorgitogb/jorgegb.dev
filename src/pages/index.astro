@@ -5,21 +5,29 @@ import Layout from '../layouts/Layout.astro';
 <Layout>
       <header class="dark:bg-dark-surface border-b dark:border-dark-muted-surface">
         <div class="container flex justify-between items-center">
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center gap-4">
             <div class="w-10 h-10 rounded-full bg-primary-blue flex items-center justify-center text-white font-bold">
               J
             </div>
             <h1 class="text-xl font-bold">Jorge García Brizuela</h1>
           </div>
-          
-          <nav>
-            <ul class="flex gap-6">
-              <li><a href="#about" class="hover:text-hover-blue dark:hover:text-dark-hover-blue hover:underline transition-colors">About</a></li>
-              <li><a href="#experience" class="hover:text-hover-blue dark:hover:text-dark-hover-blue hover:underline transition-colors">Experience</a></li>
-              <li><a href="#skills" class="hover:text-hover-blue dark:hover:text-dark-hover-blue hover:underline transition-colors">Skills</a></li>
-              <li><a href="#projects" class="hover:text-hover-blue dark:hover:text-dark-hover-blue hover:underline transition-colors">Projects</a></li>
-              <li><a href="#publications" class="hover:text-hover-blue dark:hover:text-dark-hover-blue hover:underline transition-colors">Publications</a></li>
-              <li><a href="#connect" class="hover:text-hover-blue dark:hover:text-dark-hover-blue hover:underline transition-colors">Connect</a></li>
+
+          <button id="mobile-menu-btn" class="md:hidden p-2" aria-label="Toggle menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <nav id="mobile-menu" class="hidden md:block absolute md:static top-16 md:top-0 left-0 right-0 bg-surface dark:bg-dark-surface md:bg-transparent md:dark:bg-transparent border-b md:border-b-0">
+            <ul class="flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-0">
+              <li><a href="#about" class="block hover:underline transition-colors">About</a></li>
+              <li><a href="#experience" class="block hover:underline transition-colors">Experience</a></li>
+              <li><a href="#skills" class="block hover:underline transition-colors">Skills</a></li>
+              <li><a href="#projects" class="block hover:underline transition-colors">Projects</a></li>
+              <li><a href="#publications" class="block hover:underline transition-colors">Publications</a></li>
+              <li><a href="#connect" class="block hover:underline transition-colors">Connect</a></li>
             </ul>
           </nav>
         </div>
@@ -28,19 +36,17 @@ import Layout from '../layouts/Layout.astro';
       <main>
         <section class="section bg-surface dark:bg-dark-surface">
           <div class="container text-center py-16">
-            <div class="max-w-3xl mx-auto">
               <h1 class="text-4xl md:text-5xl font-bold mb-6">Jorge Garcia Brizuela</h1>
               <p class="text-xl mb-8 text-secondary-text">
                 Software Developer at Plant Science Institute
               </p>
-              <p class="mb-10 text-lg max-w-2xl mx-auto">
+              <p class="mb-10 text-lg">
                 Bridging the gap between technology and plant science research through innovative software solutions.
               </p>
-              <div class="flex justify-center space-x-4">
+              <div class="flex justify-center gap-4">
                 <a href="#about" class="btn btn-primary">Learn More</a>
                 <a href="#contact" class="btn btn-secondary">Contact Me</a>
               </div>
-            </div>
           </div>
         </section>
 
@@ -337,5 +343,14 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </footer>
     </div>
+
+    <script>
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      menuBtn?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('hidden');
+      });
+    </script>
   </body>
 </Layout>
