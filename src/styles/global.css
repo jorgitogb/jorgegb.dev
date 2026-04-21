@@ -3,38 +3,24 @@
 @custom-variant dark (&);
 
 @theme {
-  /* Custom colors - Light Mode */
-  --color-background: #f8fafc;
-  --color-surface: #ffffff;
-  --color-muted-surface: #f1f5f9;
-  --color-primary-text: #0f172a;
-  --color-secondary-text: #6b7280;
-  --color-disabled-text: #94a3b8;
-  --color-primary-blue: #3b82f6;
-  --color-secondary-green: #22c55e;
-  --color-accent-yellow: #facc15;
-  --color-hover-blue: #60a5fa;
-  --color-hover-green: #4ade80;
-  --color-soft-yellow-bg: #fef9c3;
+  /* Custom colors - using CSS variables for dynamic theming */
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-muted-surface: var(--muted-surface);
+  --color-primary-text: var(--primary-text);
+  --color-secondary-text: var(--secondary-text);
+  --color-disabled-text: var(--disabled-text);
+  --color-primary-blue: var(--primary-blue);
+  --color-secondary-green: var(--secondary-green);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-hover-blue: var(--hover-blue);
+  --color-hover-green: var(--hover-green);
+  --color-soft-yellow-bg: var(--soft-yellow-bg);
 
   /* Custom font */
   --font-mono:
     "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
     "Source Code Pro", "Roboto Mono", monospace;
-
-  /* Dark Mode Colors */
-  --color-dark-background: #020617;
-  --color-dark-surface: #0f172a;
-  --color-dark-muted-surface: #1e293b;
-  --color-dark-primary-text: #e2e8f0;
-  --color-dark-secondary-text: #9ca3af;
-  --color-dark-disabled-text: #475569;
-  --color-dark-primary-blue: #60a5fa;
-  --color-dark-secondary-green: #4ade80;
-  --color-dark-accent-yellow: #fde047;
-  --color-dark-hover-blue: #bfdbfe;
-  --color-dark-hover-green: #bbf7d0;
-  --color-dark-soft-yellow-bg: #713f12;
 }
 
 /* Force vertical layout for main content wrapper */
@@ -68,26 +54,21 @@
 }
 
 /* Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    /* Dark Mode */
-    --background: #020617;
-    --surface: #0f172a;
-    --muted-surface: #1e293b;
-    --primary-text: #e2e8f0;
-    --secondary-text: #9ca3af;
-    --disabled-text: #475569;
+.dark {
+  --background: #020617;
+  --surface: #0f172a;
+  --muted-surface: #1e293b;
+  --primary-text: #e2e8f0;
+  --secondary-text: #9ca3af;
+  --disabled-text: #475569;
 
-    /* Brand Colors (brighter for contrast) */
-    --primary-blue: #3b82f6;
-    --secondary-green: #22c55e;
-    --accent-yellow: #fde047;
+  --primary-blue: #60a5fa;
+  --secondary-green: #4ade80;
+  --accent-yellow: #fde047;
 
-    /* Hover States */
-    --hover-blue: #60a5fa;
-    --hover-green: #4ade80;
-    --soft-yellow-bg: #713f12;
-  }
+  --hover-blue: #93c5fd;
+  --hover-green: #86efac;
+  --soft-yellow-bg: #713f12;
 }
 
 /* Base Styles */
@@ -133,8 +114,15 @@ h3 {
   font-size: 1.5rem;
 }
 
+/* Global paragraphs - reduce bottom margin */
 p {
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Footer paragraphs - remove margins */
+footer p {
+  margin-bottom: 0;
+  margin-top: 0;
 }
 
 a {
@@ -184,23 +172,19 @@ a:hover {
 
 /* Dark mode buttons */
 .dark .btn-primary {
-  background-color: var(--dark-primary-blue);
-  color: white;
+  background-color: var(--primary-blue);
 }
 
 .dark .btn-primary:hover {
-  background-color: #3b82f6;
-  color: white;
+  background-color: #1d4ed8;
 }
 
 .dark .btn-secondary {
-  background-color: var(--dark-secondary-green);
-  color: white;
+  background-color: var(--secondary-green);
 }
 
 .dark .btn-secondary:hover {
-  background-color: #22c55e;
-  color: white;
+  background-color: #15803d;
 }
 
 /* Cards */
@@ -213,8 +197,8 @@ a:hover {
 }
 
 .dark .card {
-  background-color: var(--dark-surface);
-  border-color: var(--dark-muted-surface);
+  background-color: var(--surface);
+  border-color: var(--muted-surface);
 }
 
 .card:hover {
@@ -222,7 +206,7 @@ a:hover {
 }
 
 .dark .card:hover {
-  border-color: var(--dark-primary-blue);
+  border-color: var(--primary-blue);
 }
 
 /* Container */

@@ -1,7 +1,7 @@
 # OpenCode Agent Instructions
 
 ## Project Overview
-This is a personal portfolio website built with Astro, React, TypeScript, and Tailwind CSS. The site is hosted at https://jorgegb.dev.
+This is a personal portfolio website built with Astro, React, TypeScript, and Tailwind CSS v4. The site is hosted at https://jorgegb.dev. Features a terminal/TUI aesthetic with dark mode toggle.
 
 ## Key Commands
 - `npm run dev` - Start development server
@@ -18,7 +18,13 @@ This is a personal portfolio website built with Astro, React, TypeScript, and Ta
 - Built with Astro static site generator
 - Uses React JSX with `jsxImportSource: "react"`
 - TypeScript configured with React JSX support
-- Tailwind CSS for styling
+- Tailwind CSS v4 with @theme using CSS variables for dark/light mode
+
+## Key Implementation Details
+- Dark/light mode uses CSS-only approach with `.dark` class on HTML element
+- Manual toggle button with sun/moon icons and localStorage persistence
+- Use CSS variables (var(--background), var(--surface), etc. in @theme, not hardcoded hex values
+- Avoid Tailwind's dark: prefix - use CSS-only .dark class approach instead
 
 ## Development Workflow
 1. Run `npm install` to install dependencies

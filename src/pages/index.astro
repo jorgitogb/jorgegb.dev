@@ -3,24 +3,41 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-      <header class="dark:bg-dark-surface border-b dark:border-dark-muted-surface">
+      <header class="bg-surface border-b border-gray-200">
         <div class="container flex justify-between items-center">
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
             <div class="w-10 h-10 rounded-full bg-primary-blue flex items-center justify-center text-white font-bold">
               J
             </div>
             <h1 class="text-xl font-bold">Jorge García Brizuela</h1>
           </div>
 
+          <button id="theme-toggle" class="p-2" aria-label="Toggle theme">
+            <svg id="sun-icon" class="hidden dark:block" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg id="moon-icon" class="block dark:hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
           <button id="mobile-menu-btn" class="md:hidden p-2" aria-label="Toggle menu">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
           </button>
 
-          <nav id="mobile-menu" class="hidden md:block absolute md:static top-16 md:top-0 left-0 right-0 bg-surface dark:bg-dark-surface md:bg-transparent md:dark:bg-transparent border-b md:border-b-0">
+          <nav id="mobile-menu" class="hidden md:block absolute md:static top-16 md:top-0 left-0 right-0 bg-surface md:bg-transparent border-b md:border-b-0">
             <ul class="flex flex-col md:flex-row gap-4 md:gap-6 p-4 md:p-0">
               <li><a href="#about" class="block hover:underline transition-colors">About</a></li>
               <li><a href="#experience" class="block hover:underline transition-colors">Experience</a></li>
@@ -34,7 +51,7 @@ import Layout from '../layouts/Layout.astro';
       </header>
 
       <main>
-        <section class="section bg-surface dark:bg-dark-surface">
+        <section class="section bg-surface">
           <div class="container text-center py-16">
               <h1 class="text-4xl md:text-5xl font-bold mb-6">Jorge Garcia Brizuela</h1>
               <p class="text-xl mb-8 text-secondary-text">
@@ -50,7 +67,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </section>
 
-        <section id="about" class="section bg-surface dark:bg-dark-surface">
+        <section id="about" class="section bg-surface">
           <div class="container">
             <h2 class="section-title">About Me</h2>
             <div class="grid md:grid-cols-2 gap-8 items-center">
@@ -78,13 +95,13 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </section>
 
-        <section id="experience" class="section bg-muted-surface dark:bg-dark-muted-surface">
+        <section id="experience" class="section bg-muted-surface">
           <div class="container">
             <h2 class="section-title">Experience</h2>
             <div class="space-y-8">
               <div class="card">
                 <h3 class="text-xl font-semibold mb-2">Software Developer</h3>
-                <p class="text-primary-blue dark:text-dark-primary-blue font-medium mb-2">Plant Science Institute</p>
+                <p class="text-primary-blue font-medium mb-2">Plant Science Institute</p>
                 <p class="text-secondary-text mb-4">2020 - Present</p>
                 <ul class="list-disc pl-5 space-y-2">
                   <li>Developed custom data management systems for plant research databases</li>
@@ -107,31 +124,31 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </section>
 
-        <section id="skills" class="section bg-surface dark:bg-dark-surface">
+        <section id="skills" class="section bg-surface">
           <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div class="grid md:grid-cols-3 gap-8">
               <div class="card">
-                <h3 class="text-xl font-semibold mb-4 text-primary-blue dark:text-dark-primary-blue">Programming Languages</h3>
+                <h3 class="text-xl font-semibold mb-4 text-primary-blue">Programming Languages</h3>
                 <ul class="space-y-2">
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-primary-blue mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-primary-blue"></span>
                     SQL
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-primary-blue mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-primary-blue"></span>
                     Python
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-primary-blue mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-primary-blue"></span>
                     TypeScript
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-primary-blue mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-primary-blue"></span>
                     JavaScript
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-primary-blue mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-primary-blue"></span>
                     Go
                   </li>
                 </ul>
@@ -140,16 +157,16 @@ import Layout from '../layouts/Layout.astro';
               <div class="card">
                 <h3 class="text-xl font-semibold mb-4 text-secondary-green">Frameworks</h3>
                 <ul class="space-y-2">
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-secondary-green mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-secondary-green"></span>
                     React
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-secondary-green mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-secondary-green"></span>
                     FastAPI
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-secondary-green mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-secondary-green"></span>
                     Oracle APEX
                   </li>
                 </ul>
@@ -158,8 +175,8 @@ import Layout from '../layouts/Layout.astro';
               <div class="card">
                 <h3 class="text-xl font-semibold mb-4 text-accent-yellow">Databases</h3>
                 <ul class="space-y-2">
-                  <li class="flex items-center">
-                    <span class="w-3 h-3 rounded-full bg-accent-yellow mr-2"></span>
+                  <li class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-accent-yellow"></span>
                     Oracle
                   </li>
                 </ul>
@@ -168,7 +185,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </section>
 
-        <section id="projects" class="section bg-muted-surface dark:bg-dark-muted-surface">
+        <section id="projects" class="section bg-muted-surface">
           <div class="container">
             <h2 class="section-title">Projects</h2>
             <div class="grid md:grid-cols-2 gap-8">
@@ -178,7 +195,7 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Developed a comprehensive system for managing large-scale plant phenotypic and genotypic datasets.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View on GitHub</a>
+                <a href="#" class="text-primary-blue hover:underline">View on GitHub</a>
               </div>
               
               <div class="card">
@@ -187,7 +204,7 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Created a web-based tool that enables researchers to analyze plant growth patterns from images.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View on GitHub</a>
+                <a href="#" class="text-primary-blue hover:underline">View on GitHub</a>
               </div>
               
               <div class="card">
@@ -196,7 +213,7 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Built a scalable pipeline for processing and analyzing genomic data from plant research projects.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View on GitHub</a>
+                <a href="#" class="text-primary-blue hover:underline">View on GitHub</a>
               </div>
               
               <div class="card">
@@ -205,13 +222,13 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Designed an interactive dashboard for visualizing research results and trends in plant science.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View on GitHub</a>
+                <a href="#" class="text-primary-blue hover:underline">View on GitHub</a>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="publications" class="section bg-surface dark:bg-dark-surface">
+        <section id="publications" class="section bg-surface">
           <div class="container">
             <h2 class="section-title">Scientific Publications</h2>
             <div class="space-y-6">
@@ -221,7 +238,7 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Collaborative research on identifying genetic markers associated with drought tolerance in wheat varieties.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View Publication</a>
+                <a href="#" class="text-primary-blue hover:underline">View Publication</a>
               </div>
               
               <div class="card">
@@ -230,7 +247,7 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Application of computer vision techniques for automated phenotyping in crop breeding programs.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View Publication</a>
+                <a href="#" class="text-primary-blue hover:underline">View Publication</a>
               </div>
               
               <div class="card">
@@ -239,65 +256,65 @@ import Layout from '../layouts/Layout.astro';
                 <p class="mb-4">
                   Description of database architecture designed for managing large-scale genetic datasets in plant research.
                 </p>
-                <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">View Publication</a>
+                <a href="#" class="text-primary-blue hover:underline">View Publication</a>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="connect" class="section bg-muted-surface dark:bg-dark-muted-surface">
+        <section id="connect" class="section bg-muted-surface">
           <div class="container">
             <h2 class="section-title">Connect With Me</h2>
             <div class="grid md:grid-cols-2 gap-8">
               <div class="card">
                 <h3 class="text-xl font-semibold mb-4">Professional Profiles</h3>
                 <ul class="space-y-3">
-                  <li class="flex items-center">
-                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <li class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.24 12.24a6 6 0 0 0-8.48-8.48L5 10.5V19h8.5z"></path>
                         <polyline points="16 8 20 12 16 16"></polyline>
                       </svg>
                     </span>
-                    <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">ORCID</a>
+                    <a href="#" class="text-primary-blue hover:underline">ORCID</a>
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <li class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M15 22v-4m0 0V8a2 2 0 0 1 2-2h4l-1-1"></path>
                         <path d="M4 19h4v-4H4l4-4"></path>
                         <path d="M12 12v4h4"></path>
                         <circle cx="12" cy="12" r="10"></circle>
                       </svg>
                     </span>
-                    <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">GitHub</a>
+                    <a href="#" class="text-primary-blue hover:underline">GitHub</a>
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <li class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                         <rect x="2" y="9" width="4" height="12"></rect>
                         <circle cx="4" cy="4" r="2"></circle>
                       </svg>
                     </span>
-                    <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">LinkedIn</a>
+                    <a href="#" class="text-primary-blue hover:underline">LinkedIn</a>
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <li class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.67 10.67 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                       </svg>
                     </span>
-                    <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">X (Twitter)</a>
+                    <a href="#" class="text-primary-blue hover:underline">X (Twitter)</a>
                   </li>
-                  <li class="flex items-center">
-                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <li class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-full bg-primary-blue flex items-center justify-center text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                       </svg>
                     </span>
-                    <a href="#" class="text-primary-blue dark:text-dark-primary-blue hover:underline">Instagram</a>
+                    <a href="#" class="text-primary-blue hover:underline">Instagram</a>
                   </li>
                 </ul>
               </div>
@@ -308,17 +325,17 @@ import Layout from '../layouts/Layout.astro';
                   If you find my work valuable, consider supporting me through Buy Me A Coffee or by purchasing items from my wishlist.
                 </p>
                 <div class="space-y-3">
-                  <a href="#" class="btn btn-primary w-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+                  <a href="#" class="btn btn-primary w-full flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M20.38 3.46L16 2a4 4 0 0 0-8 0l-4 1.46A2 2 0 0 0 2 7v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-1.62-1.54z"></path>
                       <path d="M12 8v4"></path>
                       <path d="M12 16h.01"></path>
                     </svg>
                     Buy Me A Coffee
                   </a>
-                  
-                  <a href="#" class="btn btn-secondary w-full flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2">
+
+                  <a href="#" class="btn btn-secondary w-full flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <path d="M12 8v4"></path>
                       <path d="M12 16h.01"></path>
@@ -332,12 +349,12 @@ import Layout from '../layouts/Layout.astro';
         </section>
       </main>
 
-      <footer class="py-8 bg-surface dark:bg-dark-surface border-t border-gray-200 dark:border-dark-muted-surface">
+      <footer class="bg-surface border-t border-gray-200" style="padding-top: 1rem; padding-bottom: 1rem;">
         <div class="container text-center">
           <p class="text-secondary-text">
-            © {new Date().getFullYear()} Jorge GB. All rights reserved.
+            © {new Date().getFullYear()} Jorge Garcia Brizuela. All rights reserved.
           </p>
-          <p class="text-secondary-text mt-2">
+          <p class="text-secondary-text">
             Built with Astro, React, and TypeScript
           </p>
         </div>
@@ -347,9 +364,15 @@ import Layout from '../layouts/Layout.astro';
     <script>
       const menuBtn = document.getElementById('mobile-menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
+      const themeToggle = document.getElementById('theme-toggle');
 
       menuBtn?.addEventListener('click', () => {
         mobileMenu?.classList.toggle('hidden');
+      });
+
+      themeToggle?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
       });
     </script>
   </body>
