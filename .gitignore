@@ -29,3 +29,4 @@ yarn-error.log
 
 # Distribution
 /public/_astro
+node_modules/.vite/deps/_metadata.json
