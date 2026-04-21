@@ -10,11 +10,11 @@
   --color-primary-text: #0f172a;
   --color-secondary-text: #6b7280;
   --color-disabled-text: #94a3b8;
-  --color-primary-blue: #2563eb;
-  --color-secondary-green: #16a34a;
+  --color-primary-blue: #3b82f6;
+  --color-secondary-green: #22c55e;
   --color-accent-yellow: #facc15;
-  --color-hover-blue: #1d4ed8;
-  --color-hover-green: #15803d;
+  --color-hover-blue: #60a5fa;
+  --color-hover-green: #4ade80;
   --color-soft-yellow-bg: #fef9c3;
 
   /* Custom font */
@@ -29,11 +29,11 @@
   --color-dark-primary-text: #e2e8f0;
   --color-dark-secondary-text: #9ca3af;
   --color-dark-disabled-text: #475569;
-  --color-dark-primary-blue: #3b82f6;
-  --color-dark-secondary-green: #22c55e;
+  --color-dark-primary-blue: #60a5fa;
+  --color-dark-secondary-green: #4ade80;
   --color-dark-accent-yellow: #fde047;
-  --color-dark-hover-blue: #60a5fa;
-  --color-dark-hover-green: #4ade80;
+  --color-dark-hover-blue: #bfdbfe;
+  --color-dark-hover-green: #bbf7d0;
   --color-dark-soft-yellow-bg: #713f12;
 }
 
@@ -57,13 +57,13 @@
   --disabled-text: #94a3b8;
 
   /* Brand Colors */
-  --primary-blue: #2563eb;
-  --secondary-green: #16a34a;
+  --primary-blue: #3b82f6;
+  --secondary-green: #22c55e;
   --accent-yellow: #facc15;
 
   /* Hover States */
-  --hover-blue: #1d4ed8;
-  --hover-green: #15803d;
+  --hover-blue: #60a5fa;
+  --hover-green: #4ade80;
   --soft-yellow-bg: #fef9c3;
 }
 
@@ -166,7 +166,8 @@ a:hover {
 }
 
 .btn-primary:hover {
-  background-color: var(--hover-blue);
+  background-color: #1d4ed8;
+  color: white;
   transform: translateY(-2px);
 }
 
@@ -176,8 +177,30 @@ a:hover {
 }
 
 .btn-secondary:hover {
-  background-color: var(--hover-green);
+  background-color: #15803d;
+  color: white;
   transform: translateY(-2px);
+}
+
+/* Dark mode buttons */
+.dark .btn-primary {
+  background-color: var(--dark-primary-blue);
+  color: white;
+}
+
+.dark .btn-primary:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.dark .btn-secondary {
+  background-color: var(--dark-secondary-green);
+  color: white;
+}
+
+.dark .btn-secondary:hover {
+  background-color: #22c55e;
+  color: white;
 }
 
 /* Cards */
