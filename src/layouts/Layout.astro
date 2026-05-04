@@ -1,5 +1,11 @@
 ---
 import '../styles/global.css';
+
+interface Props {
+  canonicalUrl?: string;
+}
+
+const { canonicalUrl = 'https://jorgegb.dev/' } = Astro.props;
 ---
 
 <!doctype html>
@@ -10,6 +16,7 @@ import '../styles/global.css';
     <title>Jorge GB - Software Developer</title>
     <meta name="description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
     <link rel="icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonicalUrl} />
   </head>
   <body class="bg-background text-primary-text">
     <div class="min-h-screen flex flex-col">
