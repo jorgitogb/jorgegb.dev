@@ -2,6 +2,23 @@
 
 @custom-variant dark (&);
 
+/* Fallback theme toggle icon visibility */
+#sun-icon {
+    display: none !important;
+}
+
+html.dark #sun-icon {
+    display: block !important;
+}
+
+#moon-icon, #moon-rays {
+    display: block !important;
+}
+
+html.dark #moon-icon, html.dark #moon-rays {
+    display: none !important;
+}
+
 @theme {
     /* Custom colors - using CSS variables for dynamic theming */
     --color-background: var(--background);
