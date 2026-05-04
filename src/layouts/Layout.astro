@@ -17,6 +17,39 @@ const { canonicalUrl = 'https://jorgegb.dev/' } = Astro.props;
     <meta name="description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
     <link rel="icon" href="/favicon.ico" />
     <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Jorge GB - Software Developer" />
+    <meta property="og:description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://jorgegb.dev/profile.jpg" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Jorge GB - Software Developer" />
+    <meta name="twitter:description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
+    <meta name="twitter:image" content="https://jorgegb.dev/profile.jpg" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Jorge Garcia Brizuela",
+        "jobTitle": "Software Developer",
+        "url": "https://jorgegb.dev",
+        "image": "https://jorgegb.dev/profile.jpg",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Plant Science Institute"
+        },
+        "sameAs": [
+          "https://orcid.org/0000-0003-0527-1339",
+          "https://github.com/jorgitogb",
+          "https://www.linkedin.com/in/jorge-garcia-brizuela-b56669aa/",
+          "https://x.com/jorge_garciab"
+        ]
+      }
+    </script>
   </head>
   <body class="bg-background text-primary-text">
     <div class="min-h-screen flex flex-col">
