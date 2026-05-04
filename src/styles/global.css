@@ -3,91 +3,91 @@
 @custom-variant dark (&);
 
 @theme {
-  /* Custom colors - using CSS variables for dynamic theming */
-  --color-background: var(--background);
-  --color-surface: var(--surface);
-  --color-muted-surface: var(--muted-surface);
-  --color-primary-text: var(--primary-text);
-  --color-secondary-text: var(--secondary-text);
-  --color-disabled-text: var(--disabled-text);
-  --color-primary-blue: var(--primary-blue);
-  --color-secondary-green: var(--secondary-green);
-  --color-accent-yellow: var(--accent-yellow);
-  --color-hover-blue: var(--hover-blue);
-  --color-hover-green: var(--hover-green);
-  --color-soft-yellow-bg: var(--soft-yellow-bg);
+    /* Custom colors - using CSS variables for dynamic theming */
+    --color-background: var(--background);
+    --color-surface: var(--surface);
+    --color-muted-surface: var(--muted-surface);
+    --color-primary-text: var(--primary-text);
+    --color-secondary-text: var(--secondary-text);
+    --color-disabled-text: var(--disabled-text);
+    --color-primary-blue: var(--primary-blue);
+    --color-secondary-green: var(--secondary-green);
+    --color-accent-yellow: var(--accent-yellow);
+    --color-hover-blue: var(--hover-blue);
+    --color-hover-green: var(--hover-green);
+    --color-soft-yellow-bg: var(--soft-yellow-bg);
 
-  /* Custom font */
-  --font-mono:
-    "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
-    "Source Code Pro", "Roboto Mono", monospace;
+    /* Custom font */
+    --font-mono:
+        "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+        "Source Code Pro", "Roboto Mono", monospace;
 }
 
 /* Force vertical layout for main content wrapper */
 .min-h-screen {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Styles for the personal website */
 
 /* Color Variables */
 :root {
-  /* Light Mode */
-  --background: #f8fafc;
-  --surface: #ffffff;
-  --muted-surface: #f1f5f9;
-  --primary-text: #0f172a;
-  --secondary-text: #6b7280;
-  --disabled-text: #94a3b8;
+    /* Light Mode */
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --muted-surface: #f1f5f9;
+    --primary-text: #0f172a;
+    --secondary-text: #6b7280;
+    --disabled-text: #94a3b8;
 
-  /* Brand Colors */
-  --primary-blue: #3b82f6;
-  --secondary-green: #22c55e;
-  --accent-yellow: #facc15;
+    /* Brand Colors */
+    --primary-blue: #3b82f6;
+    --secondary-green: #22c55e;
+    --accent-yellow: #facc15;
 
-  /* Hover States */
-  --hover-blue: #60a5fa;
-  --hover-green: #4ade80;
-  --soft-yellow-bg: #fef9c3;
+    /* Hover States */
+    --hover-blue: #60a5fa;
+    --hover-green: #4ade80;
+    --soft-yellow-bg: #fef9c3;
 }
 
 /* Dark Mode */
 .dark {
-  --background: #020617;
-  --surface: #0f172a;
-  --muted-surface: #1e293b;
-  --primary-text: #e2e8f0;
-  --secondary-text: #9ca3af;
-  --disabled-text: #475569;
+    --background: #020617;
+    --surface: #0f172a;
+    --muted-surface: #1e293b;
+    --primary-text: #e2e8f0;
+    --secondary-text: #9ca3af;
+    --disabled-text: #475569;
 
-  --primary-blue: #60a5fa;
-  --secondary-green: #4ade80;
-  --accent-yellow: #fde047;
+    --primary-blue: #60a5fa;
+    --secondary-green: #4ade80;
+    --accent-yellow: #fde047;
 
-  --hover-blue: #93c5fd;
-  --hover-green: #86efac;
-  --soft-yellow-bg: #713f12;
+    --hover-blue: #93c5fd;
+    --hover-green: #86efac;
+    --soft-yellow-bg: #713f12;
 }
 
 /* Base Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--primary-text);
-  font-family:
-    "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
-    "Source Code Pro", "Roboto Mono", monospace;
-  line-height: 1.6;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color: var(--background);
+    color: var(--primary-text);
+    font-family:
+        "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+        "Source Code Pro", "Roboto Mono", monospace;
+    line-height: 1.6;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
 /* Typography */
@@ -97,243 +97,265 @@ h3,
 h4,
 h5,
 h6 {
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  line-height: 1.2;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    line-height: 1.2;
 }
 
 h1 {
-  font-size: 2.5rem;
+    font-size: 2.5rem;
 }
 
 h2 {
-  font-size: 2rem;
+    font-size: 2rem;
 }
 
 h3 {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 /* Global paragraphs - reduce bottom margin */
 p {
-  margin-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
 }
 
 /* Footer paragraphs - remove margins */
 footer p {
-  margin-bottom: 0;
-  margin-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 a {
-  color: var(--primary-blue);
-  text-decoration: none;
-  transition: color 0.2s ease;
+    color: var(--primary-blue);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--hover-blue);
+    color: var(--hover-blue);
 }
 
 /* Buttons */
 .btn {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0;
-  font-weight: 500;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  border: 1px solid var(--primary-blue);
-  font-size: 1rem;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--primary-blue);
+    font-size: 1rem;
 }
 
 .btn-primary {
-  background-color: var(--primary-blue);
-  color: white;
+    background-color: var(--primary-blue);
+    color: white;
 }
 
 .btn-primary:hover {
-  background-color: #1d4ed8;
-  color: white;
-  transform: translateY(-2px);
+    background-color: #1d4ed8;
+    color: white;
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background-color: var(--secondary-green);
-  color: white;
+    background-color: var(--secondary-green);
+    color: white;
 }
 
 .btn-secondary:hover {
-  background-color: #15803d;
-  color: white;
-  transform: translateY(-2px);
+    background-color: #15803d;
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* Dark mode buttons */
 .dark .btn-primary {
-  background-color: var(--primary-blue);
+    background-color: var(--primary-blue);
 }
 
 .dark .btn-primary:hover {
-  background-color: #1d4ed8;
+    background-color: #1d4ed8;
 }
 
 .dark .btn-secondary {
-  background-color: var(--secondary-green);
+    background-color: var(--secondary-green);
 }
 
 .dark .btn-secondary:hover {
-  background-color: #15803d;
+    background-color: #15803d;
 }
 
 /* Cards */
 .card {
-  background-color: var(--surface);
-  border-radius: 0;
-  padding: 1.5rem;
-  border: 1px solid var(--muted-surface);
-  transition: border-color 0.2s ease;
+    background-color: var(--surface);
+    border-radius: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--muted-surface);
+    transition: border-color 0.2s ease;
 }
 
 .dark .card {
-  background-color: var(--surface);
-  border-color: var(--muted-surface);
+    background-color: var(--surface);
+    border-color: var(--muted-surface);
 }
 
 .card:hover {
-  border-color: var(--primary-blue);
+    border-color: var(--primary-blue);
 }
 
 .dark .card:hover {
-  border-color: var(--primary-blue);
+    border-color: var(--primary-blue);
 }
 
 /* Container */
 .container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 /* Section spacing */
 .section {
-  padding: 4rem 0;
+    padding: 4rem 0;
 }
 
 .section-title {
-  text-align: center;
-  margin-bottom: 3rem;
-  position: relative;
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
 }
 
 .section-title::after {
-  content: "";
-  display: block;
-  width: 3rem;
-  height: 2px;
-  background-color: var(--primary-blue);
-  margin: 0.5rem auto;
+    content: "";
+    display: block;
+    width: 3rem;
+    height: 2px;
+    background-color: var(--primary-blue);
+    margin: 0.5rem auto;
 }
 
 /* Grid */
 .grid {
-  display: grid;
-  gap: 2rem;
+    display: grid;
+    gap: 2rem;
 }
 
 /* Flexbox */
 .flex {
-  display: flex;
+    display: flex;
 }
 
 .flex-center {
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-  .section {
-    padding: 2rem 0;
-  }
+    .section {
+        padding: 2rem 0;
+    }
 
-  h1 {
-    font-size: 2rem;
-  }
+    h1 {
+        font-size: 2rem;
+    }
 
-  h2 {
-    font-size: 1.75rem;
-  }
+    h2 {
+        font-size: 1.75rem;
+    }
 
-  .grid {
-    grid-template-columns: 1fr;
-  }
+    .grid {
+        grid-template-columns: 1fr;
+    }
 
-  .container {
-    padding: 0 0.75rem;
-  }
+    .container {
+        padding: 0 0.75rem;
+    }
 }
 
 /* Terminal-like enhancements */
 .border-terminal {
-  border: 1px solid var(--muted-surface);
+    border: 1px solid var(--muted-surface);
 }
 
 .border-terminal:hover {
-  border-color: var(--primary-blue);
+    border-color: var(--primary-blue);
 }
 
 /* Terminal window decoration style */
 .terminal-header {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  background-color: var(--muted-surface);
-  border-bottom: 1px solid var(--muted-surface);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--muted-surface);
+    border-bottom: 1px solid var(--muted-surface);
 }
 
 .terminal-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 0;
 }
 
 .terminal-dot.red {
-  background-color: #ff5f56;
+    background-color: #ff5f56;
 }
 .terminal-dot.yellow {
-  background-color: #ffbd2e;
+    background-color: #ffbd2e;
 }
 .terminal-dot.green {
-  background-color: #27c93f;
+    background-color: #27c93f;
 }
 
 /* Command prompt style */
 .prompt {
-  color: var(--primary-blue);
-  font-weight: 600;
+    color: var(--primary-blue);
+    font-weight: 600;
 }
 
 .prompt::before {
-  content: "$ ";
-  color: var(--secondary-text);
+    content: "$ ";
+    color: var(--secondary-text);
 }
 
 /* Code/block styling */
 code,
 pre {
-  font-family:
-    "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
-    "Source Code Pro", "Roboto Mono", monospace;
-  background-color: var(--muted-surface);
-  padding: 0.25rem 0.5rem;
-  border-radius: 0;
+    font-family:
+        "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+        "Source Code Pro", "Roboto Mono", monospace;
+    background-color: var(--muted-surface);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0;
 }
 
 /* Remove rounded corners globally */
 * {
-  border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+/* Section button spacing fix - overrides Tailwind when needed */
+.section-buttons {
+    margin-top: 3rem !important;
+    padding-top: 1rem;
+}
+
+/* Connect section grid gap fix */
+#connect .grid {
+    gap: 2.5rem !important;
+}
+
+/* Card button spacing fix */
+.card-buttons {
+    gap: 0.3rem !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-buttons > * + * {
+    margin-top: 1rem !important;
 }
