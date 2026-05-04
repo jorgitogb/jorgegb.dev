@@ -3,65 +3,148 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout canonicalUrl="https://jorgegb.dev/publications">
-  <div class="min-h-screen flex flex-col">
-    <header class="bg-surface border-b border-gray-200">
-      <div class="container">
-        <nav class="flex items-center justify-between py-4">
-          <a href="/" class="text-xl font-bold">Jorge Garcia Brizuela</a>
-          <ul class="flex gap-6">
-            <li><a href="/" class="hover:underline transition-colors">Home</a></li>
-            <li><a href="/publications" class="hover:underline transition-colors">Publications</a></li>
-          </ul>
-        </nav>
-      </div>
+    <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
+        <div class="container flex justify-between items-center py-3">
+            <div class="flex items-center gap-3">
+                <img
+                    src="/profile.jpg"
+                    alt="Jorge García Brizuela"
+                    class="w-10 h-10 rounded-full object-cover"
+                />
+                <h1 class="text-xl font-bold whitespace-nowrap">Jorge García Brizuela</h1>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <nav class="hidden lg:flex items-center gap-5">
+                    <ul class="flex items-center gap-4 whitespace-nowrap">
+                        <li><a href="/" class="hover:underline transition-colors text-sm">Home</a></li>
+                        <li><a href="/publications" class="hover:underline transition-colors text-sm">Publications</a></li>
+                        <li><a href="/wishlist" class="hover:underline transition-colors text-sm">Wishlist</a></li>
+                    </ul>
+                </nav>
+
+                <button id="theme-toggle" class="p-2" aria-label="Toggle theme">
+                    <svg
+                        id="sun-icon"
+                        class="hidden dark:block"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg
+                        id="moon-icon"
+                        class="block dark:hidden"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <button
+                    id="mobile-menu-btn"
+                    class="lg:hidden p-2"
+                    aria-label="Toggle menu"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu-dropdown" class="lg:hidden hidden absolute top-full left-0 right-0 bg-surface border-b border-gray-200">
+            <ul class="flex flex-col gap-4 p-4">
+                <li><a href="/" class="block hover:underline transition-colors">Home</a></li>
+                <li><a href="/publications" class="block hover:underline transition-colors">Publications</a></li>
+                <li><a href="/wishlist" class="block hover:underline transition-colors">Wishlist</a></li>
+            </ul>
+        </div>
     </header>
 
     <main class="flex-1">
-     <section id="publications" class="section ">
-          <div class="container">
-            <h2 class="section-title">Scientific Publications</h2>
-            <div class="space-y-6">
-              <div class="card">
-                <h3 class="text-xl font-semibold mb-2">A roadmap for a middleware as a federation service for integrative data retrieval of agricultural data</h3>
-                <p class="text-secondary-text mb-2">Journal of Integrative Bioinformatics, 2024</p>
-                <p class="mb-4">
-                  A comprehensive roadmap for developing middleware solutions enabling federated access to agricultural research data.
-                </p>
-                <a href="https://doi.org/10.1515/jib-2024-0027" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
-              </div>
-              
-              <div class="card">
-                <h3 class="text-xl font-semibold mb-2">A dynamical systems approach for pineapple cryopreservation analysis</h3>
-                <p class="text-secondary-text mb-2">IFAC-PapersOnLine, 2019</p>
-                <p class="mb-4">
-                  Application of dynamical systems methodology to analyze and optimize cryopreservation protocols for pineapple cultures.
-                </p>
-                <a href="https://doi.org/10.1016/j.ifacol.2019.06.072" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
-              </div>
-              
-              <div class="card">
-                <h3 class="text-xl font-semibold mb-2">Accessing to the Nicotiana tabacum leaf antimicrobial activity: In-silico and in-vitro investigations</h3>
-                <p class="text-secondary-text mb-2">Plant Physiology and Biochemistry, 2019</p>
-                <p class="mb-4">
-                  Computational and experimental investigation of antimicrobial properties in tobacco leaf tissues.
-                </p>
-                <a href="https://doi.org/10.1016/j.plaphy.2019.04.015" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
-              </div>
+        <section id="publications" class="section bg-surface">
+            <div class="container">
+                <h2 class="section-title">Scientific Publications</h2>
+                <div class="space-y-6">
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2">A roadmap for a middleware as a federation service for integrative data retrieval of agricultural data</h3>
+                        <p class="text-secondary-text mb-2">Journal of Integrative Bioinformatics, 2024</p>
+                        <p class="mb-4">
+                            A comprehensive roadmap for developing middleware solutions enabling federated access to agricultural research data.
+                        </p>
+                        <a href="https://doi.org/10.1515/jib-2024-0027" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2">A dynamical systems approach for pineapple cryopreservation analysis</h3>
+                        <p class="text-secondary-text mb-2">IFAC-PapersOnLine, 2019</p>
+                        <p class="mb-4">
+                            Application of dynamical systems methodology to analyze and optimize cryopreservation protocols for pineapple cultures.
+                        </p>
+                        <a href="https://doi.org/10.1016/j.ifacol.2019.06.072" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 class="text-xl font-semibold mb-2">Accessing to the Nicotiana tabacum leaf antimicrobial activity: In-silico and in-vitro investigations</h3>
+                        <p class="text-secondary-text mb-2">Plant Physiology and Biochemistry, 2019</p>
+                        <p class="mb-4">
+                            Computational and experimental investigation of antimicrobial properties in tobacco leaf tissues.
+                        </p>
+                        <a href="https://doi.org/10.1016/j.plaphy.2019.04.015" target="_blank" rel="noopener" class="text-primary-blue hover:underline">View Publication</a>
+                    </div>
+                </div>
             </div>
-          </div>
         </section>
-
     </main>
 
-    <footer class="bg-surface border-t border-gray-200" style="padding-top: 1rem; padding-bottom: 1rem;">
-      <div class="container text-center">
-        <p class="text-secondary-text">
-          &copy; {new Date().getFullYear()} Jorge Garcia Brizuela. All rights reserved.
-        </p>
-        <p class="text-secondary-text">
-          Built with Astro, React, and TypeScript
-        </p>
-      </div>
+    <footer class="bg-surface border-t border-gray-200 py-4">
+        <div class="container text-center">
+            <p class="text-secondary-text">
+                &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
+            </p>
+            <p class="text-secondary-text">
+                Built with Astro, React, and TypeScript
+            </p>
+        </div>
     </footer>
-  </div>
 </Layout>
+
+<script>
+    const menuBtn = document.getElementById("mobile-menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu-dropdown");
+    const themeToggle = document.getElementById("theme-toggle");
+
+    menuBtn?.addEventListener("click", () => {
+        mobileMenu?.classList.toggle("hidden");
+    });
+
+    themeToggle?.addEventListener("click", () => {
+        const isDark = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+</script>
