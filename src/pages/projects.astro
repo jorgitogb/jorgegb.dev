@@ -1,8 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro'
+import { fetchGitHubRepos, fetchNpmPackages } from '../lib/projects'
+
+const repos = await fetchGitHubRepos()
+const packages = await fetchNpmPackages()
+
+function formatDownloads(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
+  return String(n)
+}
 ---
 
-<Layout canonicalUrl="https://jorgegb.dev/wishlist">
+<Layout canonicalUrl="https://jorgegb.dev/projects">
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
         <div class="container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
@@ -89,34 +99,87 @@ import Layout from '../layouts/Layout.astro';
     </header>
 
     <main class="flex-1">
-        <section class="section bg-muted-surface">
-            <div class="container text-center">
-                <h2 class="section-title">Wishlist</h2>
-                <p class="text-secondary-text mb-12">
-                    Products I'm saving up for. Your support helps make these happen!
-                </p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                    <div class="card text-center p-4">
-                        <h3 class="text-sm font-semibold mb-2">Xiaomi Light Bar</h3>
-                        <a href="https://www.amazon.de/Xiaomi-Computer-Lichtleiste-regulierbare-Farbtemperatur/dp/B08W2C5W59" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+        <section id="projects" class="section bg-surface">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+
+                {repos.length > 0 && (
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-secondary-text">GitHub Projects</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            {repos.map((repo) => (
+                                <div class="card">
+                                    <p class="font-mono text-sm text-secondary-text mb-1">
+                                        <span class="text-primary-blue">$</span> gh repo {repo.name}
+                                        {repo.stargazersCount > 0 && (
+                                            <span class="float-right text-yellow-500">★ {repo.stargazersCount}</span>
+                                        )}
+                                    </p>
+                                    <p class="mb-3">{repo.description ?? 'No description'}</p>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        {repo.language && (
+                                            <span class="text-xs font-mono text-secondary-text border border-gray-300 px-2 py-0.5">{repo.language}</span>
+                                        )}
+                                    </div>
+                                    <a
+                                        href={repo.htmlUrl}
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="text-primary-blue hover:underline font-mono text-sm"
+                                    >
+                                        View on GitHub →
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    
-                    <div class="card text-center p-4">
-                        <h3 class="text-sm font-semibold mb-2">Xiaomi Speaker</h3>
-                        <a href="https://www.mi.com/de/product/xiaomi-desktop-speaker/" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+                )}
+
+                {repos.length === 0 && (
+                    <div class="card mb-8">
+                        <p class="text-secondary-text">
+                            Unable to load GitHub repositories. Check my
+                            {' '}<a href="https://github.com/jorgitogb" target="_blank" rel="noopener" class="text-primary-blue hover:underline">GitHub profile</a>.
+                        </p>
                     </div>
-                    
-                    <div class="card text-center p-4">
-                        <h3 class="text-sm font-semibold mb-2">KZZI I75 Keyboard</h3>
-                        <a href="https://www.kzzistore.com/products/kzzi-i75-low-profile-mechanical-keyboard?variant=50794998858006" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+                )}
+
+                {packages.length > 0 && (
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold mb-4 text-secondary-text">npm Packages</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            {packages.map((pkg) => (
+                                <div class="card">
+                                    <p class="font-mono text-sm text-secondary-text mb-1">
+                                        <span class="text-primary-blue">$</span> npm i {pkg.name}
+                                        <span class="float-right text-green-500">↓ {formatDownloads(pkg.weeklyDownloads)}/wk</span>
+                                    </p>
+                                    <p class="mb-3">{pkg.description ?? 'No description'}</p>
+                                    <p class="text-xs font-mono text-secondary-text mb-3">v{pkg.version}</p>
+                                    {pkg.repositoryUrl && (
+                                        <a
+                                            href={pkg.repositoryUrl}
+                                            target="_blank"
+                                            rel="noopener"
+                                            class="text-primary-blue hover:underline font-mono text-sm"
+                                        >
+                                            View on npm →
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                    
-                    <div class="card text-center p-4">
-                        <h3 class="text-sm font-semibold mb-2">Magic Trackpad</h3>
-                        <a href="https://www.apple.com/de/shop/product/mxk93z/a/magic-trackpad-usb-c-weisse-multi-touch-oberflache" target="_blank" rel="noopener" class="text-primary-blue hover:underline text-sm">View</a>
+                )}
+
+                {packages.length === 0 && (
+                    <div class="card mt-8">
+                        <p class="text-secondary-text">
+                            Unable to load npm packages. Check my
+                            {' '}<a href="https://www.npmjs.com/~jorgegb" target="_blank" rel="noopener" class="text-primary-blue hover:underline">npm profile</a>.
+                        </p>
                     </div>
-                </div>
+                )}
             </div>
         </section>
     </main>

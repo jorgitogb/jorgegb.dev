@@ -1,6 +1,6 @@
 {
   "project": "jorgegb.dev",
-  "description": "Personal page",
+  "description": "",
   "rules": {
     "one_feature_at_a_time": true,
     "require_tests_to_close": true,
@@ -8,5 +8,13 @@
     "valid_status": ["pending", "spec_ready", "in_progress", "done", "blocked"],
     "sdd_required_when": "feature has \"sdd\": true"
   },
-  "features": []
+  "features": [
+    {
+      "id": 1,
+      "name": "projects-section",
+      "status": "done",
+      "sdd": true,
+      "description": "Add Projects section to homepage and /projects page showing GitHub repos and npm packages"
+    }
+  ]
 }

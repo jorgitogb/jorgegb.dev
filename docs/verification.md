@@ -12,8 +12,8 @@
 
 ### For the implementer
 
-- Run the full test suite: `if command -v npx >/dev/null 2>&1 && npx astro --version >/dev/null 2>&1; then
-  if npx astro check 2>&1; then
+- Run the full test suite: `if command -v pnpm >/dev/null 2>&1 && pnpm astro --version >/dev/null 2>&1; then
+  if pnpm astro check 2>&1; then
     ok "Astro type checks pass"
   else
     fail "Astro type checks failed"
@@ -24,7 +24,7 @@ else
 fi
 
 if [ -f "package.json" ]; then
-  if npm test 2>&1; then
+  if pnpm test 2>&1; then
     ok "All tests pass"
   else
     fail "Some tests failed"

@@ -30,35 +30,35 @@ if ! command -v node >/dev/null 2>&1; then
 fi
 ok "node -> $(node --version)"
 
-# npm available
-if ! command -v npm >/dev/null 2>&1; then
-  fail "npm is not installed"
+# pnpm available
+if ! command -v pnpm >/dev/null 2>&1; then
+  fail "pnpm is not installed"
   exit 1
 fi
-ok "npm -> $(npm --version)"
+ok "pnpm -> $(pnpm --version)"
 
 # Astro framework checks
 
 # Astro CLI available
-if command -v npx >/dev/null 2>&1; then
-  if npx astro --version >/dev/null 2>&1; then
-    ok "Astro CLI available via npx"
+if command -v pnpm >/dev/null 2>&1; then
+  if pnpm astro --version >/dev/null 2>&1; then
+    ok "Astro CLI available via pnpm"
   else
-    warn "Astro CLI not found — run 'npm i -D astro' if needed"
+    warn "Astro CLI not found — run 'pnpm add -D astro' if needed"
   fi
 else
-  warn "npx not found — skipping Astro check"
+  warn "pnpm not found — skipping Astro check"
 fi
 
 # TypeScript (Astro uses .ts files)
-if command -v npx >/dev/null 2>&1; then
-  if npx tsc --version >/dev/null 2>&1; then
-    ok "TypeScript available via npx"
+if command -v pnpm >/dev/null 2>&1; then
+  if pnpm tsc --version >/dev/null 2>&1; then
+    ok "TypeScript available via pnpm"
   else
-    warn "TypeScript not found — run 'npm i -D typescript' if needed"
+    warn "TypeScript not found — run 'pnpm add -D typescript' if needed"
   fi
 else
-  warn "npx not found — skipping TypeScript check"
+  warn "pnpm not found — skipping TypeScript check"
 fi
 
 
@@ -118,8 +118,8 @@ if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 echo ""
 echo "── 4. Running tests ────────────────────────────────────"
 
-if command -v npx >/dev/null 2>&1 && npx astro --version >/dev/null 2>&1; then
-  if npx astro check 2>&1; then
+if command -v pnpm >/dev/null 2>&1 && pnpm astro --version >/dev/null 2>&1; then
+  if pnpm astro check 2>&1; then
     ok "Astro type checks pass"
   else
     fail "Astro type checks failed"
@@ -130,7 +130,7 @@ else
 fi
 
 if [ -f "package.json" ]; then
-  if npm test 2>&1; then
+  if pnpm test 2>&1; then
     ok "All tests pass"
   else
     fail "Some tests failed"

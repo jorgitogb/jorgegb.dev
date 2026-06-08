@@ -1,5 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { fetchGitHubRepos, fetchNpmPackages } from "../lib/projects";
+
+const repos = await fetchGitHubRepos()
+const packages = await fetchNpmPackages()
+
+function formatDownloads(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
+  return String(n)
+}
 ---
 
 <Layout>
@@ -55,6 +65,13 @@ import Layout from "../layouts/Layout.astro";
                                 href="#publications"
                                 class="hover:underline transition-colors text-sm"
                                 >Publications</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="/projects"
+                                class="hover:underline transition-colors text-sm"
+                                >Projects</a
                             >
                         </li>
                         <li>
@@ -169,6 +186,13 @@ import Layout from "../layouts/Layout.astro";
                         href="#publications"
                         class="block hover:underline transition-colors"
                         >Publications</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="/projects"
+                        class="block hover:underline transition-colors"
+                        >Projects</a
                     >
                 </li>
                 <li>
@@ -420,6 +444,83 @@ import Layout from "../layouts/Layout.astro";
                     <a href="/publications" class="btn btn-secondary"
                         >View All Publications</a
                     >
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section bg-surface">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+                {repos.length > 0 && (
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4 text-secondary-text">GitHub Projects</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            {repos.slice(0, 4).map((repo) => (
+                                <div class="card">
+                                    <p class="font-mono text-sm text-secondary-text mb-1">
+                                        <span class="text-primary-blue">$</span> gh repo {repo.name}
+                                        {repo.stargazersCount > 0 && (
+                                            <span class="float-right text-yellow-500">★ {repo.stargazersCount}</span>
+                                        )}
+                                    </p>
+                                    <p class="mb-3">{repo.description ?? 'No description'}</p>
+                                    <div class="flex items-center gap-2 mb-3">
+                                        {repo.language && (
+                                            <span class="text-xs font-mono text-secondary-text border border-gray-300 px-2 py-0.5">{repo.language}</span>
+                                        )}
+                                    </div>
+                                    <a
+                                        href={repo.htmlUrl}
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="text-primary-blue hover:underline font-mono text-sm"
+                                    >
+                                        View on GitHub →
+                                    </a>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {packages.length > 0 && (
+                    <div class="mt-8">
+                        <h3 class="text-lg font-semibold mb-4 text-secondary-text">npm Packages</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            {packages.slice(0, 2).map((pkg) => (
+                                <div class="card">
+                                    <p class="font-mono text-sm text-secondary-text mb-1">
+                                        <span class="text-primary-blue">$</span> npm i {pkg.name}
+                                        <span class="float-right text-green-500">↓ {formatDownloads(pkg.weeklyDownloads)}/wk</span>
+                                    </p>
+                                    <p class="mb-3">{pkg.description ?? 'No description'}</p>
+                                    <p class="text-xs font-mono text-secondary-text mb-3">v{pkg.version}</p>
+                                    {pkg.repositoryUrl && (
+                                        <a
+                                            href={pkg.repositoryUrl}
+                                            target="_blank"
+                                            rel="noopener"
+                                            class="text-primary-blue hover:underline font-mono text-sm"
+                                        >
+                                            View on npm →
+                                        </a>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {repos.length === 0 && packages.length === 0 && (
+                    <div class="card text-center">
+                        <p class="text-secondary-text">
+                            No projects to display. Check my
+                            {' '}<a href="https://github.com/jorgitogb" target="_blank" rel="noopener" class="text-primary-blue hover:underline">GitHub</a>
+                            {' '}or{' '}
+                            <a href="https://www.npmjs.com/~jorgegb" target="_blank" rel="noopener" class="text-primary-blue hover:underline">npm</a>.
+                        </p>
+                    </div>
+                )}
+                <div class="text-center section-buttons">
+                    <a href="/projects" class="btn btn-secondary">View All Projects</a>
                 </div>
             </div>
         </section>

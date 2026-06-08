@@ -2,31 +2,40 @@
 /node_modules
 /.astro
 /dist
-
 # Environment variables
 .env
 .env.local
 .env.*.local
-
 # Build outputs
 /build
 /out
-
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
 # OS
 .DS_Store
 Thumbs.db
-
 # Logs
 npm-debug.log
 yarn-debug.log
 yarn-error.log
-
 # Distribution
 /public/_astro
-
+node_modules/
+# Build output
+dist/
+build/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+# Testing
+coverage/
+.nyc_output/
+# Env
+# Editor
+# Astro-specific
+dist/
+.astro/
