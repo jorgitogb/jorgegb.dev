@@ -5,6 +5,13 @@
 
 ---
 
+## Project identity
+
+- **Name:** jorgegb.dev
+- **Stack:** Node.js / Astro
+
+---
+
 ## 1. Before you start (mandatory)
 
 1. Run `./init.sh` and verify it ends without errors. If it fails, stop and fix the environment before touching code.
@@ -45,20 +52,20 @@
 pending → [spec_author] → spec_ready → HUMAN → in_progress → [implementer → reviewer] → done
 ```
 
-1. The leader detects the first `pending` feature with `"sdd": true`.
+1. The leader queries Linear via Linear MCP for the first issue with status `pending` and `"sdd": true`.
 2. The leader launches `spec_author`, which creates `specs/<name>/{requirements,design,tasks}.md` and marks status as `spec_ready`.
 3. **Pause.** The human reviews the spec in `specs/<name>/` and approves (or asks for changes).
-4. Once approved, the leader changes status to `in_progress` and launches `implementer`.
+4. Once approved, the leader transitions the feature to `in_progress` (in the backend) and launches `implementer`.
 5. The implementer executes `tasks.md` one by one, marking them `[x]`.
 6. The reviewer verifies `R<n>` ↔ test traceability and complete tasks; approves or rejects.
-7. If approved, the implementer marks `done` and moves the summary to `progress/history.md`.
+7. If approved, the feature is marked `done` and the summary moves to `progress/history.md`.
 
 ## 5. Session close (lifecycle)
 
 Before ending:
 
 1. Run `./init.sh` — all green.
-2. If the task is finished: mark `status: "done"` in `feature_list.json`.
+2. If the task is finished: transition the issue to `Done` via Linear MCP, then update `feature_list.json`.
 3. Move the summary from `progress/current.md` to the end of `progress/history.md`.
 4. Empty `progress/current.md`, leaving only the template.
 5. No temporary files, no debug `print()`, no TODOs without context.
@@ -83,6 +90,11 @@ Before ending:
 - Agent permissions are enforced by opencode. The leader cannot edit `src/` or `tests/`.
 - Use `Tab` to cycle between primary agents during a session.
 - Use `session_child_first` / `session_child_cycle` / `session_parent` to navigate between parent and child sessions.
+
+## Session management
+
+- `/wrap` — End session. Writes note: what was done, current progress. Closes child sessions.
+- `/resume` — Resume project from a previous session. Restores context from saved summary.
 
 ## Recommended tools
 

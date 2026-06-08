@@ -15,6 +15,13 @@
       "status": "done",
       "sdd": true,
       "description": "Add Projects section to homepage and /projects page showing GitHub repos and npm packages"
+    },
+    {
+      "id": 2,
+      "name": "blog-section",
+      "status": "done",
+      "sdd": true,
+      "description": "Add Blog section to homepage and /blog page with 3 mock tech/science posts"
     }
   ]
 }

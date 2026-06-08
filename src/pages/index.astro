@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { fetchGitHubRepos, fetchNpmPackages } from "../lib/projects";
+import { posts } from "../data/blog-posts";
 
 const repos = await fetchGitHubRepos()
 const packages = await fetchNpmPackages()
@@ -21,8 +22,8 @@ function formatDownloads(n: number): string {
                     alt="JGB Logo"
                     class="w-10 h-10"
                 />
-                <h1 class="text-xl font-bold whitespace-nowrap">
-                    Jorge García Brizuela
+                <h1 class="text-xl font-bold">
+                    jorgegb.dev
                 </h1>
             </div>
 
@@ -69,9 +70,16 @@ function formatDownloads(n: number): string {
                         </li>
                         <li>
                             <a
-                                href="/projects"
+                                href="#projects"
                                 class="hover:underline transition-colors text-sm"
                                 >Projects</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="#blog"
+                                class="hover:underline transition-colors text-sm"
+                                >Blog</a
                             >
                         </li>
                         <li>
@@ -190,9 +198,16 @@ function formatDownloads(n: number): string {
                 </li>
                 <li>
                     <a
-                        href="/projects"
+                        href="#projects"
                         class="block hover:underline transition-colors"
                         >Projects</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#blog"
+                        class="block hover:underline transition-colors"
+                        >Blog</a
                     >
                 </li>
                 <li>
@@ -521,6 +536,33 @@ function formatDownloads(n: number): string {
                 )}
                 <div class="text-center section-buttons">
                     <a href="/projects" class="btn btn-secondary">View All Projects</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="blog" class="section bg-muted-surface">
+            <div class="container">
+                <h2 class="section-title">Blog</h2>
+                {posts.length > 0 && (
+                    <div class="grid md:grid-cols-2 gap-4">
+                        {posts.slice(0, 3).map((post) => (
+                            <div class="card">
+                                <p class="text-xs font-mono text-secondary-text mb-2">
+                                    {post.date}
+                                </p>
+                                <h3 class="text-lg font-semibold mb-2">{post.title}</h3>
+                                <p class="text-sm text-secondary-text mb-3">{post.description}</p>
+                                <div class="flex items-center gap-2 mb-3 flex-wrap">
+                                    {post.tags.map((tag) => (
+                                        <span class="text-xs font-mono text-primary-blue border border-gray-300 px-2 py-0.5">{tag}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+                <div class="text-center section-buttons">
+                    <a href="/blog" class="btn btn-secondary">View All Posts</a>
                 </div>
             </div>
         </section>
