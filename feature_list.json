@@ -22,6 +22,27 @@
       "status": "done",
       "sdd": true,
       "description": "Add Blog section to homepage and /blog page with 3 mock tech/science posts"
+    },
+    {
+      "id": 3,
+      "name": "build-hardening",
+      "status": "in_progress",
+      "sdd": true,
+      "description": "Add astro build + dist verification + node:test smoke tests to init.sh so regressions fail the harness"
+    },
+    {
+      "id": 4,
+      "name": "mobile-a11y",
+      "status": "spec_ready",
+      "sdd": true,
+      "description": "Fix mobile UX and a11y: skip link, focus ring, aria-expanded, tap targets, reduced motion, FOUC, dedup shared script, profile image attrs, broken blog links, React footer copy"
+    },
+    {
+      "id": 5,
+      "name": "seo-meta",
+      "status": "spec_ready",
+      "sdd": true,
+      "description": "Per-page title/description/OG/Twitter/JSON-LD, @astrojs/sitemap, theme-color, apple-touch-icon, og-default.png via sharp"
     }
   ]
 }

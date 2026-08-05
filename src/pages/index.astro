@@ -22,9 +22,9 @@ function formatDownloads(n: number): string {
                     alt="JGB Logo"
                     class="w-10 h-10"
                 />
-                <h1 class="text-xl font-bold">
+                <span class="text-xl font-bold">
                     jorgegb.dev
-                </h1>
+                </span>
             </div>
 
             <div class="flex items-center gap-6">
@@ -92,7 +92,7 @@ function formatDownloads(n: number): string {
                     </ul>
                 </nav>
 
-                <button id="theme-toggle" class="p-2" aria-label="Toggle theme">
+                <button id="theme-toggle" class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Toggle theme">
                     <svg
                         id="sun-icon"
                         class="hidden dark:block"
@@ -136,8 +136,10 @@ function formatDownloads(n: number): string {
 
                 <button
                     id="mobile-menu-btn"
-                    class="lg:hidden p-2"
+                    class="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Toggle menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu-dropdown"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +223,7 @@ function formatDownloads(n: number): string {
         </div>
     </header>
 
-    <main>
+    <main id="main">
         <section class="section bg-surface">
             <div class="container text-center py-16">
                 <h1 class="text-4xl md:text-5xl font-bold mb-6">
@@ -274,7 +276,11 @@ function formatDownloads(n: number): string {
                         <img
                             src="/profile.jpg"
                             alt="Jorge García Brizuela"
-                            class="w-64 h-64 rounded-full object-cover"
+                            width="256"
+                            height="256"
+                            loading="lazy"
+                            decoding="async"
+                            class="w-full max-w-[16rem] h-auto rounded-full object-cover"
                         />
                     </div>
                 </div>
@@ -795,23 +801,9 @@ function formatDownloads(n: number): string {
                 © {new Date().getFullYear()} Jorge Garcia Brizuela. All rights reserved.
             </p>
             <p class="text-secondary-text">
-                Built with Astro, React, and TypeScript
+                Built with Astro and TypeScript
             </p>
         </div>
     </footer>
 </Layout>
 
-<script>
-    const menuBtn = document.getElementById("mobile-menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu-dropdown");
-    const themeToggle = document.getElementById("theme-toggle");
-
-    menuBtn?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("hidden");
-    });
-
-    themeToggle?.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-</script>

@@ -152,6 +152,28 @@ a:hover {
     color: var(--hover-blue);
 }
 
+*:focus-visible {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* Skip-to-content link */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background-color: var(--surface);
+    color: var(--primary-text);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--primary-blue);
+    z-index: 100;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    top: 0;
+}
+
 /* Buttons */
 .btn {
     display: inline-block;
@@ -375,4 +397,16 @@ pre {
 
 .card-buttons > * + * {
     margin-top: 1rem !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

@@ -118,6 +118,9 @@ if [ $? -ne 0 ]; then EXIT_CODE=1; fi
 echo ""
 echo "── 4. Running tests ────────────────────────────────────"
 
+rm -rf dist
+ok "Cleaned dist/"
+
 if command -v pnpm >/dev/null 2>&1 && pnpm astro --version >/dev/null 2>&1; then
   if pnpm astro check 2>&1; then
     ok "Astro type checks pass"
@@ -125,8 +128,33 @@ if command -v pnpm >/dev/null 2>&1 && pnpm astro --version >/dev/null 2>&1; then
     fail "Astro type checks failed"
     EXIT_CODE=1
   fi
+
+  if pnpm astro build 2>&1; then
+    ok "Astro build succeeded"
+  else
+    fail "Astro build failed"
+    EXIT_CODE=1
+  fi
 else
-  warn "astro CLI not found — skipping type check"
+  warn "astro CLI not found — skipping type check and build"
+fi
+
+if [ -d "dist" ]; then
+  for page in index blog projects publications wishlist; do
+    if [ "$page" = "index" ]; then
+      target="dist/index.html"
+    else
+      target="dist/$page/index.html"
+    fi
+    if [ -f "$target" ]; then
+      ok "$target exists"
+    else
+      fail "$target missing"
+      EXIT_CODE=1
+    fi
+  done
+else
+  warn "dist/ missing — skipping build artifact checks"
 fi
 
 if [ -f "package.json" ]; then

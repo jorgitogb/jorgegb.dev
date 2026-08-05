@@ -5,7 +5,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "echo 'no tests configured'"
+    "test": "pnpm test:smoke",
+    "test:smoke": "node --test tests/smoke.test.ts"
   },
   "dependencies": {
     "@mseep/linear-mcp": "^78.0.1",
