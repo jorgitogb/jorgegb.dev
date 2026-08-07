@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jorgegb.dev/sitemap.xml
+Sitemap: https://jorgegb.dev/sitemap-index.xml

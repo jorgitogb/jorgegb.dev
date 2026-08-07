@@ -1,8 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const pageTitle = 'Wishlist — Jorge GB'
+const pageDescription = 'A curated list of products Jorge García Brizuela is saving up for.'
 ---
 
-<Layout canonicalUrl="https://jorgegb.dev/wishlist">
+<Layout title={pageTitle} description={pageDescription} canonicalUrl="https://jorgegb.dev/wishlist">
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
         <div class="container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
@@ -11,7 +14,7 @@ import Layout from '../layouts/Layout.astro';
                     alt="JGB Logo"
                     class="w-10 h-10"
                 />
-                <h1 class="text-xl font-bold">jorgegb.dev</h1>
+                <span class="text-xl font-bold">jorgegb.dev</span>
             </div>
 
             <div class="flex items-center gap-4">
@@ -25,7 +28,7 @@ import Layout from '../layouts/Layout.astro';
                     </ul>
                 </nav>
 
-                <button id="theme-toggle" class="p-2" aria-label="Toggle theme">
+                <button id="theme-toggle" class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Toggle theme">
                     <svg
                         id="sun-icon"
                         class="hidden dark:block"
@@ -68,8 +71,10 @@ import Layout from '../layouts/Layout.astro';
 
                 <button
                     id="mobile-menu-btn"
-                    class="lg:hidden p-2"
+                    class="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Toggle menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu-dropdown"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -90,7 +95,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
     </header>
 
-    <main class="flex-1">
+    <main id="main" class="flex-1">
         <section class="section bg-muted-surface">
             <div class="container text-center">
                 <h2 class="section-title">Wishlist</h2>
@@ -129,23 +134,9 @@ import Layout from '../layouts/Layout.astro';
                 &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
             </p>
             <p class="text-secondary-text">
-                Built with Astro, React, and TypeScript
+                Built with Astro and TypeScript
             </p>
         </div>
     </footer>
 </Layout>
 
-<script>
-    const menuBtn = document.getElementById("mobile-menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu-dropdown");
-    const themeToggle = document.getElementById("theme-toggle");
-
-    menuBtn?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("hidden");
-    });
-
-    themeToggle?.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-</script>

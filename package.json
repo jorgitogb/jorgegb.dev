@@ -6,7 +6,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "pnpm test:smoke",
-    "test:smoke": "node --test tests/smoke.test.ts"
+    "test:smoke": "node --test tests/smoke.test.ts",
+    "build:assets": "node scripts/build-assets.mjs"
   },
   "dependencies": {
     "@mseep/linear-mcp": "^78.0.1",
@@ -16,6 +17,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@astrojs/sitemap": "^3.7.3",
+    "sharp": "^0.35.3",
     "typescript": "^5.9.3"
   }
 }

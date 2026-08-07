@@ -11,9 +11,16 @@ function formatDownloads(n: number): string {
   if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
   return String(n)
 }
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Jorge GB',
+  url: 'https://jorgegb.dev',
+}
 ---
 
-<Layout>
+<Layout ogType="profile" jsonLd={websiteLd}>
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
         <div class="container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">

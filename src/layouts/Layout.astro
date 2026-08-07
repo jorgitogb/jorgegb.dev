@@ -2,10 +2,50 @@
 import '../styles/global.css';
 
 interface Props {
+  title?: string;
+  description?: string;
   canonicalUrl?: string;
+  ogType?: 'profile' | 'website' | 'article';
+  ogImage?: { url: string; width: number; height: number; alt?: string };
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
-const { canonicalUrl = 'https://jorgegb.dev/' } = Astro.props;
+const {
+  title = 'Jorge GB — Software Developer',
+  description = 'Portfolio of Jorge García Brizuela, scientific software engineer at IPK Leibniz Institute',
+  canonicalUrl = 'https://jorgegb.dev/',
+  ogType = 'website',
+  ogImage = { url: 'https://jorgegb.dev/og-default.png', width: 1200, height: 630, alt: title },
+  jsonLd,
+} = Astro.props
+
+const personLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jorge Garcia Brizuela',
+  jobTitle: 'Software Developer',
+  url: 'https://jorgegb.dev',
+  image: 'https://jorgegb.dev/profile.jpg',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'IPK Leibniz Institute of Plant Genetics and Crop Plant Research',
+  },
+  sameAs: [
+    'https://orcid.org/0000-0003-0527-1339',
+    'https://github.com/jorgitogb',
+    'https://www.linkedin.com/in/jorge-garcia-brizuela-b56669aa/',
+    'https://x.com/jorge_garciab',
+  ],
+}
+
+const pageStructuredData = jsonLd
+  ? Array.isArray(jsonLd)
+    ? jsonLd
+    : [jsonLd]
+  : []
+
+const structuredData =
+  ogType === 'profile' ? [personLd, ...pageStructuredData] : pageStructuredData
 ---
 
 <!doctype html>
@@ -13,22 +53,28 @@ const { canonicalUrl = 'https://jorgegb.dev/' } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jorge GB - Software Developer</title>
-    <meta name="description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
     <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
 
-    <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Jorge GB - Software Developer" />
-    <meta property="og:description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content="https://jorgegb.dev/profile.jpg" />
+    <meta property="og:image" content={ogImage.url} />
+    <meta property="og:image:width" content={String(ogImage.width)} />
+    <meta property="og:image:height" content={String(ogImage.height)} />
+    {ogImage.alt && <meta property="og:image:alt" content={ogImage.alt} />}
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Jorge GB - Software Developer" />
-    <meta name="twitter:description" content="Portfolio of Jorge GB, Software Developer at Plant Science Institute" />
-    <meta name="twitter:image" content="https://jorgegb.dev/profile.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage.url} />
 
     <script is:inline defer>
       const theme = (() => {
@@ -80,26 +126,9 @@ const { canonicalUrl = 'https://jorgegb.dev/' } = Astro.props;
       }
     </script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Jorge Garcia Brizuela",
-        "jobTitle": "Software Developer",
-        "url": "https://jorgegb.dev",
-        "image": "https://jorgegb.dev/profile.jpg",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "IPK Leibniz Institute of Plant Genetics and Crop Plant Research"
-        },
-        "sameAs": [
-          "https://orcid.org/0000-0003-0527-1339",
-          "https://github.com/jorgitogb",
-          "https://www.linkedin.com/in/jorge-garcia-brizuela-b56669aa/",
-          "https://x.com/jorge_garciab"
-        ]
-      }
-    </script>
+    {structuredData.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
+    )}
   </head>
   <body class="bg-background text-primary-text">
     <a href="#main" class="skip-link">Skip to content</a>

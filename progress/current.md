@@ -1,24 +1,19 @@
 # Progress — Current session
 
-## Feature in progress
-
-- `build-hardening` (id: 3) — in_progress
-
 ## Plan
 
-- [ ] T1 — Add `rm -rf dist` + build step to `init.sh`
-- [ ] T2 — Add build + dist/sitemap existence checks in `init.sh`
-- [ ] T3 — Create `tests/smoke.test.ts` using `node:test`
-- [ ] T4 — Add `test:smoke` script in `package.json`
-- [ ] T5 — Run `./init.sh` clean and verify all checks pass
-- [ ] T6 — Mark `build-hardening` as `done`, move summary to `progress/history.md`
+- [x] Fix skip-link peeking out at the top-left corner on page load
 
 ## Notes
 
-- Executing order: `build-hardening` → `mobile-a11y` → `seo-meta`.
-- `build-hardening` is the first feature because the new harness must verify the build before the UI specs modify the source.
+- `.skip-link` height (~44px) exceeded the `top: -40px` offset, leaving a visible strip.
+- Changed `top: -40px` to `top: -100%` and added `white-space: nowrap` so the link is fully hidden until focused.
+- `./init.sh` passes after the fix.
 
 ## Files touched
 
-- `feature_list.json` — `build-hardening` set to `in_progress`
-- `progress/current.md` — this file
+- `src/styles/global.css`
+
+## Awaiting human review
+
+- Confirm the skip-link is no longer visible on initial load and appears only on `Tab` focus.

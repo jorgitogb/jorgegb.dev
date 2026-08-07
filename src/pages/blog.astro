@@ -1,9 +1,34 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { posts } from '../data/blog-posts'
+
+const pageTitle = 'Blog — Jorge GB'
+const pageDescription = 'Posts on FAIR data, reproducible workflows, and open science infrastructure.'
+
+const collectionLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Blog',
+  url: 'https://jorgegb.dev/blog',
+}
+
+const postsLd = posts.map((post) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  datePublished: post.date,
+  description: post.description,
+  url: `https://jorgegb.dev/blog#${post.slug}`,
+  keywords: post.tags.join(', '),
+  author: {
+    '@type': 'Person',
+    name: 'Jorge Garcia Brizuela',
+    url: 'https://jorgegb.dev',
+  },
+}))
 ---
 
-<Layout canonicalUrl="https://jorgegb.dev/blog">
+<Layout title={pageTitle} description={pageDescription} canonicalUrl="https://jorgegb.dev/blog" jsonLd={[collectionLd, ...postsLd]}>
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
         <div class="container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
@@ -26,7 +51,7 @@ import { posts } from '../data/blog-posts'
                     </ul>
                 </nav>
 
-                <button id="theme-toggle" class="p-2" aria-label="Toggle theme">
+                <button id="theme-toggle" class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Toggle theme">
                     <svg
                         id="sun-icon"
                         class="hidden dark:block"
@@ -69,8 +94,10 @@ import { posts } from '../data/blog-posts'
 
                 <button
                     id="mobile-menu-btn"
-                    class="lg:hidden p-2"
+                    class="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Toggle menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu-dropdown"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -91,7 +118,7 @@ import { posts } from '../data/blog-posts'
         </div>
     </header>
 
-    <main class="flex-1">
+    <main id="main" class="flex-1">
         <section id="blog" class="section bg-surface">
             <div class="container">
                 <h2 class="section-title">Blog</h2>
@@ -110,7 +137,7 @@ import { posts } from '../data/blog-posts'
                                     ))}
                                 </div>
                                 <a
-                                    href="#"
+                                    href={`/blog#${post.slug}`}
                                     class="text-primary-blue hover:underline font-mono text-sm"
                                 >
                                     Read more →
@@ -136,23 +163,9 @@ import { posts } from '../data/blog-posts'
                 &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
             </p>
             <p class="text-secondary-text">
-                Built with Astro, React, and TypeScript
+                Built with Astro and TypeScript
             </p>
         </div>
     </footer>
 </Layout>
 
-<script>
-    const menuBtn = document.getElementById("mobile-menu-btn");
-    const mobileMenu = document.getElementById("mobile-menu-dropdown");
-    const themeToggle = document.getElementById("theme-toggle");
-
-    menuBtn?.addEventListener("click", () => {
-        mobileMenu?.classList.toggle("hidden");
-    });
-
-    themeToggle?.addEventListener("click", () => {
-        const isDark = document.documentElement.classList.toggle("dark");
-        localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-</script>
