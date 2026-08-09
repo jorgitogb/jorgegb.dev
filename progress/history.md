@@ -40,3 +40,9 @@ Completed three SDD features: `build-hardening`, `mobile-a11y`, `seo-meta`.
 - `pnpm astro build` emits all 5 pages and `dist/sitemap-index.xml`/`dist/sitemap-0.xml`.
 - Built HTML inspected for unique per-page `<title>`, description, OG/Twitter tags, theme-color, apple-touch-icon, and JSON-LD.
 
+## 2026-08-07 — Skip-link visibility fix
+
+- Adjusted `.skip-link` from `top: -40px` to `top: -100%` and added `white-space: nowrap` so the link is fully hidden until focused.
+- `./init.sh` still passes.
+- Changes committed and pushed in `b928007`.
+
