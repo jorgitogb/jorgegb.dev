@@ -6,9 +6,10 @@ import { transform } from '@astrojs/compiler'
 
 const pagesDir = new URL('../src/pages', import.meta.url).pathname
 
-const pages = readdirSync(pagesDir)
+const pages = readdirSync(pagesDir, { recursive: true })
   .filter((file) => file.endsWith('.astro'))
-  .map((file) => join(pagesDir, file))
+  .map((file) => join(pagesDir, String(file)))
+  .sort()
 
 describe('Astro page smoke tests', () => {
   for (const page of pages) {

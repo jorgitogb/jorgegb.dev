@@ -43,6 +43,13 @@
       "status": "done",
       "sdd": true,
       "description": "Per-page title/description/OG/Twitter/JSON-LD, @astrojs/sitemap, theme-color, apple-touch-icon, og-default.png via sharp"
+    },
+    {
+      "id": 6,
+      "name": "research-supplier-page",
+      "status": "in_progress",
+      "sdd": true,
+      "description": "Add German research/validation page at /research/supplier-data with per-page SEO metadata and a Research nav link"
     }
   ]
 }

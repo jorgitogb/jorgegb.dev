@@ -24,6 +24,9 @@ importers:
       '@astrojs/check':
         specifier: ^0.9.9
         version: 0.9.9(prettier@3.8.3)(typescript@5.9.3)
+      '@astrojs/compiler':
+        specifier: ^2.13.1
+        version: 2.13.1
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3

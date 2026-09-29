@@ -5,6 +5,7 @@ interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
+  lang?: string;
   ogType?: 'profile' | 'website' | 'article';
   ogImage?: { url: string; width: number; height: number; alt?: string };
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
@@ -14,6 +15,7 @@ const {
   title = 'Jorge GB — Software Developer',
   description = 'Portfolio of Jorge García Brizuela, scientific software engineer at IPK Leibniz Institute',
   canonicalUrl = 'https://jorgegb.dev/',
+  lang = 'en',
   ogType = 'website',
   ogImage = { url: 'https://jorgegb.dev/og-default.png', width: 1200, height: 630, alt: title },
   jsonLd,
@@ -49,7 +51,7 @@ const structuredData =
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

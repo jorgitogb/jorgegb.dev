@@ -140,7 +140,7 @@ else
 fi
 
 if [ -d "dist" ]; then
-  for page in index blog projects publications wishlist; do
+  for page in index blog projects publications wishlist research/supplier-data; do
     if [ "$page" = "index" ]; then
       target="dist/index.html"
     else

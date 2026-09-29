@@ -1,0 +1,294 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+const pageTitle = 'Supplierdaten aus Excel/CSV – Research | Jorge'
+const pageDescription =
+    'Research zu manuellen Workflows mit Lieferantendaten aus Excel- und CSV-Dateien und deren Vorbereitung für ERP- oder Webshop-Importe.'
+const canonicalUrl = 'https://jorgegb.dev/research/supplier-data'
+
+const webpageLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Lieferantendaten aus Excel/CSV – Research',
+    description: pageDescription,
+    url: canonicalUrl,
+    inLanguage: 'de',
+}
+
+const contactEmail = 'me@jorgegb.dev'
+const linkedInUrl =
+    'https://www.linkedin.com/in/jorge-garcia-brizuela-b56669aa/'
+
+const workItems = [
+    'Bereinigung oder Korrektur',
+    'Abbildung auf ein internes Format',
+    'Umwandlung zwischen Excel- und CSV-Formaten',
+    'Prüfung auf fehlende oder ungültige Werte',
+    'Vorbereitung für den ERP- oder Webshop-Import',
+]
+
+const questions = [
+    'Wie oft erhalten Sie Excel- oder CSV-Dateien von Lieferanten?',
+    'Nutzen Ihre Lieferanten unterschiedliche Formate?',
+    'Was müssen Sie normalerweise ändern, bevor Sie die Daten importieren können?',
+    'Wie viel manuelle Arbeit kostet das in der Regel?',
+    'Was ist an diesem Prozess am lästigsten?',
+]
+---
+
+<Layout
+    canonicalUrl={canonicalUrl}
+    title={pageTitle}
+    description={pageDescription}
+    lang="de"
+    jsonLd={webpageLd}
+>
+    <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
+        <div class="container flex justify-between items-center py-3">
+            <div class="flex items-center gap-3">
+                <img
+                    src="/logo.svg"
+                    alt="JGB Logo"
+                    class="w-10 h-10"
+                />
+                <span class="text-xl font-bold">jorgegb.dev</span>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <nav class="hidden lg:flex items-center gap-5">
+                    <ul class="flex items-center gap-4 whitespace-nowrap">
+                        <li><a href="/" class="hover:underline transition-colors text-sm">Home</a></li>
+                        <li><a href="/publications" class="hover:underline transition-colors text-sm">Publications</a></li>
+                        <li><a href="/projects" class="hover:underline transition-colors text-sm">Projects</a></li>
+                        <li><a href="/blog" class="hover:underline transition-colors text-sm">Blog</a></li>
+                        <li><a href="/wishlist" class="hover:underline transition-colors text-sm">Wishlist</a></li>
+                        <li><a href="/research/supplier-data" class="hover:underline transition-colors text-sm">Research</a></li>
+                    </ul>
+                </nav>
+
+                <button id="theme-toggle" class="p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Toggle theme">
+                    <svg
+                        id="sun-icon"
+                        class="hidden dark:block"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg
+                        id="moon-icon"
+                        class="block dark:hidden"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+
+                <button
+                    id="mobile-menu-btn"
+                    class="lg:hidden p-2 min-w-[44px] min-h-[44px] max-lg:flex items-center justify-center"
+                    aria-label="Toggle menu"
+                    aria-expanded="false"
+                    aria-controls="mobile-menu-dropdown"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu-dropdown" class="lg:hidden hidden absolute top-full left-0 right-0 bg-surface border-b border-gray-200">
+            <ul class="flex flex-col gap-4 p-4">
+                <li><a href="/" class="block hover:underline transition-colors">Home</a></li>
+                <li><a href="/publications" class="block hover:underline transition-colors">Publications</a></li>
+                <li><a href="/projects" class="block hover:underline transition-colors">Projects</a></li>
+                <li><a href="/blog" class="block hover:underline transition-colors">Blog</a></li>
+                <li><a href="/wishlist" class="block hover:underline transition-colors">Wishlist</a></li>
+                <li><a href="/research/supplier-data" class="block hover:underline transition-colors">Research</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main id="main" class="flex-1">
+        <section class="section bg-surface">
+            <div class="container">
+                <div class="research-body">
+                    <span
+                        class="research-badge text-xs font-mono uppercase tracking-wider text-primary-blue"
+                        >Research</span
+                    >
+
+                    <h1>Lieferantendaten aus Excel/CSV – Research</h1>
+
+                    <p>
+                        Ich untersuche derzeit, wie kleine und mittelständische
+                        Unternehmen mit Lieferantendaten umgehen, die als
+                        Excel- oder CSV-Datei ankommen.
+                    </p>
+
+                    <p>
+                        Mich interessieren besonders wiederkehrende Situationen,
+                        in denen mit Lieferantendateien folgende Arbeiten
+                        anfallen:
+                    </p>
+
+                    <ul class="flex flex-col gap-3" role="list">
+                        {
+                            workItems.map((item) => (
+                                <li class="flex gap-3 items-start">
+                                    <span
+                                        class="text-primary-blue font-mono shrink-0 select-none"
+                                        aria-hidden="true"
+                                    >
+                                        •
+                                    </span>
+                                    <span>{item}</span>
+                                </li>
+                            ))
+                        }
+                    </ul>
+
+                    <p>
+                        Ziel ist es, den aktuellen Ablauf zu verstehen und
+                        herauszufinden, wo die größten Probleme liegen.
+                    </p>
+
+                    <p class="font-semibold">
+                        Ich verkaufe aktuell kein Produkt.
+                    </p>
+
+                    <p>
+                        Wenn Ihr Unternehmen regelmäßig mit Excel- oder
+                        CSV-Dateien von Lieferanten arbeitet, würde ich gerne
+                        erfahren, wie Sie damit umgehen.
+                    </p>
+
+                    <h2>Ein paar Fragen</h2>
+
+                    <ol class="flex flex-col gap-5" role="list">
+                        {
+                            questions.map((question, index) => (
+                                <li class="flex gap-4 items-start">
+                                    <span class="text-primary-blue font-mono shrink-0">
+                                        {index + 1}
+                                    </span>
+                                    <span>{question}</span>
+                                </li>
+                            ))
+                        }
+                    </ol>
+
+                    <p>
+                        Wenn Sie eine anonymisierte Beispieldatei bereitstellen
+                        können, wäre das ebenfalls sehr hilfreich.
+                    </p>
+
+                    <div class="card flex flex-col gap-4">
+                        <p>
+                            Sie erreichen mich unter meiner beruflichen
+                            E-Mail-Adresse oder über LinkedIn:
+                        </p>
+                        <div class="flex flex-wrap items-center gap-x-8 gap-y-3">
+                            <a
+                                href={`mailto:${contactEmail}`}
+                                class="font-mono"
+                            >
+                                {contactEmail}
+                            </a>
+                            <a
+                                href={linkedInUrl}
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                LinkedIn
+                            </a>
+                        </div>
+                    </div>
+
+                    <p class="font-semibold">Danke!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-surface border-t border-gray-200 py-4">
+        <div class="container text-center">
+            <p class="text-secondary-text">
+                &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
+            </p>
+            <p class="text-secondary-text">
+                Built with Astro and TypeScript
+            </p>
+        </div>
+    </footer>
+</Layout>
+
+<style>
+    /*
+     * global.css declares `* { margin: 0; padding: 0 }`, `p { margin-bottom }`
+     * and `h1/h2 { font-size }` outside any CSS layer, while Tailwind v4 puts
+     * its utilities in `@layer utilities`. Unlayered declarations win, so the
+     * margin/padding utilities cannot do their job here. These few scoped
+     * rules cover exactly what the utilities are missing on this page.
+     *
+     * Selectors below are deliberately disjoint: Astro scopes them by turning
+     * the bare element selectors into `h1[data-astro-cid-…]`, which would
+     * otherwise out-specify a generic `> * + *` flow rule.
+     */
+    .research-body {
+        max-width: 48rem;
+        margin-inline: auto;
+    }
+
+    .research-body > p,
+    .research-body > ul,
+    .research-body > ol,
+    .research-body > div {
+        margin-top: 1.75rem;
+    }
+
+    .research-body > h1 {
+        margin-top: 1rem;
+    }
+
+    .research-body > h2 {
+        margin-top: 2.75rem;
+    }
+
+    .research-body h1,
+    .research-body h2,
+    .research-body p {
+        margin-bottom: 0;
+    }
+
+    .research-badge {
+        display: inline-block;
+        padding: 0.3rem 0.7rem;
+        border: 1px solid var(--primary-blue);
+    }
+</style>
