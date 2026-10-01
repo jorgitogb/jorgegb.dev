@@ -1,3 +1,10 @@
+packages:
+  - '.'
+# pnpm 12 approval list (onlyBuiltDependencies below is the pnpm 10 equivalent;
+# each version ignores the other's key).
 allowBuilds:
   esbuild: true
   sharp: true
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
