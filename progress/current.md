@@ -13,6 +13,18 @@
 
 ## Notes
 
+### 2026-10-01 audit blocked — initializer unavailable
+
+- `./init.sh` could not be started by PowerShell: `Access is denied`.
+- Retrying through Bash also failed before the script ran: WSL returned
+  `Bash/Service/CreateInstance/E_ACCESSDENIED`.
+- Per `AGENTS.md`, no source audit was performed because the required initializer
+  must succeed before touching project code. Restore executable access to the
+  repository script or repair the local WSL service, then re-run the audit.
+- Retried on 2026-10-01 after the user repaired their environment:
+  `wsl --cd "C:\\Users\\brizuela\\Documents\\GitHub\\jorgegb.dev" bash -lc "./init.sh"`
+  still returns `Wsl/Service/CreateInstance/E_ACCESSDENIED` before `init.sh` starts.
+
 ### Git problems found and resolved
 
 1. **`master` was 5 commits behind, 0 ahead**, but had local edits in all 12 files those
