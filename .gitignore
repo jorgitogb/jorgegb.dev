@@ -39,6 +39,3 @@ coverage/
 # Astro-specific
 dist/
 .astro/
-# Package manager — pnpm 12 regenerates this on every install;
-# upstream deliberately does not track it (see 9ccaccf)
-/pnpm-workspace.yaml

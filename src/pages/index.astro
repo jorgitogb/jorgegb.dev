@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { fetchGitHubRepos, fetchNpmPackages } from "../lib/projects";
+import { describeProject, fetchGitHubRepos, fetchNpmPackages } from "../lib/projects";
 import { posts } from "../data/blog-posts";
 
-const repos = await fetchGitHubRepos()
-const packages = await fetchNpmPackages()
+const [repos, packages] = await Promise.all([fetchGitHubRepos(), fetchNpmPackages()])
 
 function formatDownloads(n: number): string {
   if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
@@ -22,11 +21,13 @@ const websiteLd = {
 
 <Layout ogType="profile" jsonLd={websiteLd}>
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
-        <div class="container flex justify-between items-center py-3">
+        <div class="site-container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
                 <img
                     src="/logo.svg"
                     alt="JGB Logo"
+                    width="40"
+                    height="40"
                     class="w-10 h-10"
                 />
                 <span class="text-xl font-bold">
@@ -246,7 +247,7 @@ const websiteLd = {
 
     <main id="main">
         <section class="section bg-surface">
-            <div class="container text-center py-16">
+            <div class="site-container text-center py-16">
                 <h1 class="text-4xl md:text-5xl font-bold mb-6">
                     Jorge García Brizuela
                 </h1>
@@ -272,7 +273,7 @@ const websiteLd = {
         </section>
 
         <section id="about" class="section bg-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">About Me</h2>
                 <div class="grid md:grid-cols-2 gap-8 items-center">
                     <div>
@@ -309,7 +310,7 @@ const websiteLd = {
         </section>
 
         <section id="what-i-do" class="section bg-muted-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">What I Do</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div class="card">
@@ -353,7 +354,7 @@ const websiteLd = {
         </section>
 
         <section id="tech-stack" class="section bg-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">Tech Stack</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="card text-center">
@@ -386,7 +387,7 @@ const websiteLd = {
         </section>
 
         <section id="interests" class="section bg-muted-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">Interests</h2>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div class="card">
@@ -413,7 +414,7 @@ const websiteLd = {
         </section>
 
         <section id="publications" class="section bg-muted-surface pb-10">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">Scientific Publications</h2>
                 <div class="space-y-6">
                     <div class="card">
@@ -491,7 +492,7 @@ const websiteLd = {
         </section>
 
         <section id="projects" class="section bg-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">Projects</h2>
                 {repos.length > 0 && (
                     <div>
@@ -505,7 +506,7 @@ const websiteLd = {
                                             <span class="float-right text-yellow-500">★ {repo.stargazersCount}</span>
                                         )}
                                     </p>
-                                    <p class="mb-3">{repo.description ?? 'No description'}</p>
+                                    <p class="mb-3">{describeProject(repo.name, repo.description, repo.language)}</p>
                                     <div class="flex items-center gap-2 mb-3">
                                         {repo.language && (
                                             <span class="text-xs font-mono text-secondary-text border border-gray-300 px-2 py-0.5">{repo.language}</span>
@@ -534,7 +535,7 @@ const websiteLd = {
                                         <span class="text-primary-blue">$</span> npm i {pkg.name}
                                         <span class="float-right text-green-500">↓ {formatDownloads(pkg.weeklyDownloads)}/wk</span>
                                     </p>
-                                    <p class="mb-3">{pkg.description ?? 'No description'}</p>
+                                    <p class="mb-3">{describeProject(pkg.name, pkg.description, null)}</p>
                                     <p class="text-xs font-mono text-secondary-text mb-3">v{pkg.version}</p>
                                     {pkg.repositoryUrl && (
                                         <a
@@ -568,7 +569,7 @@ const websiteLd = {
         </section>
 
         <section id="blog" class="section bg-muted-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">Blog</h2>
                 {posts.length > 0 && (
                     <div class="grid md:grid-cols-2 gap-4">
@@ -595,7 +596,7 @@ const websiteLd = {
         </section>
 
         <section id="connect" class="section bg-muted-surface">
-            <div class="container">
+            <div class="site-container">
                 <h2 class="section-title">Connect With Me</h2>
                 <div class="grid md:grid-cols-2 gap-8">
                     <div class="card">
@@ -755,8 +756,7 @@ const websiteLd = {
                         <p class="mb-4">
                             If you find my work valuable, consider supporting me
                             through Buy Me A Coffee or by purchasing items from
-			    my wishlist. <strong>(Just for test)</strong>
-
+                            my wishlist.
                         </p>
                         <div class="card-buttons">
                             <a
@@ -817,7 +817,7 @@ const websiteLd = {
         class="bg-surface border-t border-gray-200"
         style="padding-top: 1rem; padding-bottom: 1rem;"
     >
-        <div class="container text-center">
+        <div class="site-container text-center">
             <p class="text-secondary-text">
                 © {new Date().getFullYear()} Jorge Garcia Brizuela. All rights reserved.
             </p>

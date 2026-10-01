@@ -7,7 +7,7 @@ import { transform } from '@astrojs/compiler'
 const pagesDir = new URL('../src/pages', import.meta.url).pathname
 
 const pages = readdirSync(pagesDir, { recursive: true })
-  .filter((file) => file.endsWith('.astro'))
+  .filter((file) => String(file).endsWith('.astro'))
   .map((file) => join(pagesDir, String(file)))
   .sort()
 

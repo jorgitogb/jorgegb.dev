@@ -7,11 +7,13 @@ const pageDescription = 'A curated list of products Jorge García Brizuela is sa
 
 <Layout title={pageTitle} description={pageDescription} canonicalUrl="https://jorgegb.dev/wishlist">
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
-        <div class="container flex justify-between items-center py-3">
+        <div class="site-container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
                 <img
                     src="/logo.svg"
                     alt="JGB Logo"
+                    width="40"
+                    height="40"
                     class="w-10 h-10"
                 />
                 <span class="text-xl font-bold">jorgegb.dev</span>
@@ -99,8 +101,8 @@ const pageDescription = 'A curated list of products Jorge García Brizuela is sa
 
     <main id="main" class="flex-1">
         <section class="section bg-muted-surface">
-            <div class="container text-center">
-                <h2 class="section-title">Wishlist</h2>
+            <div class="site-container text-center">
+                <h1 class="section-title">Wishlist</h1>
                 <p class="text-secondary-text mb-12">
                     Products I'm saving up for. Your support helps make these happen!
                 </p>
@@ -131,7 +133,7 @@ const pageDescription = 'A curated list of products Jorge García Brizuela is sa
     </main>
 
     <footer class="bg-surface border-t border-gray-200 py-4">
-        <div class="container text-center">
+        <div class="site-container text-center">
             <p class="text-secondary-text">
                 &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
             </p>

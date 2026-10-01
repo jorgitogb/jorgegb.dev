@@ -1,15 +1,13 @@
 {
-  "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "sharp"]
-  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "pnpm test:smoke",
+    "test": "astro build && node --test \"tests/*.test.ts\"",
     "test:smoke": "node --test tests/smoke.test.ts",
+    "test:fast": "node --test \"tests/*.test.ts\"",
     "build:assets": "node scripts/build-assets.mjs"
   },
   "dependencies": {

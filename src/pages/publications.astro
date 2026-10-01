@@ -45,11 +45,13 @@ const publicationsLd = publications.map((pub) => ({
 
 <Layout title={pageTitle} description={pageDescription} canonicalUrl="https://jorgegb.dev/publications" jsonLd={publicationsLd}>
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
-        <div class="container flex justify-between items-center py-3">
+        <div class="site-container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
                 <img
                     src="/logo.svg"
                     alt="JGB Logo"
+                    width="40"
+                    height="40"
                     class="w-10 h-10"
                 />
                 <span class="text-xl font-bold">jorgegb.dev</span>
@@ -137,8 +139,8 @@ const publicationsLd = publications.map((pub) => ({
 
     <main id="main" class="flex-1">
         <section id="publications" class="section bg-surface">
-            <div class="container">
-                <h2 class="section-title">Scientific Publications</h2>
+            <div class="site-container">
+                <h1 class="section-title">Scientific Publications</h1>
                 <div class="space-y-6">
                     <div class="card">
                         <h3 class="text-xl font-semibold mb-2">A roadmap for a middleware as a federation service for integrative data retrieval of agricultural data</h3>
@@ -172,7 +174,7 @@ const publicationsLd = publications.map((pub) => ({
     </main>
 
     <footer class="bg-surface border-t border-gray-200 py-4">
-        <div class="container text-center">
+        <div class="site-container text-center">
             <p class="text-secondary-text">
                 &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
             </p>

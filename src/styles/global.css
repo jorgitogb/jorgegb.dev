@@ -1,23 +1,13 @@
 @import "tailwindcss";
 
-@custom-variant dark (&);
+/* NOTE: layer order is declared by Tailwind's own import as
+   theme, base, components, utilities. All custom CSS below lives in
+   base/components layers so Tailwind utilities apply where used. */
 
-/* Fallback theme toggle icon visibility */
-#sun-icon {
-    display: none !important;
-}
-
-html.dark #sun-icon {
-    display: block !important;
-}
-
-#moon-icon, #moon-rays {
-    display: block !important;
-}
-
-html.dark #moon-icon, html.dark #moon-rays {
-    display: none !important;
-}
+/* Class-based dark variant: dark: utilities only apply inside .dark.
+   (The previous `dark (&)` compiled to a bare selector, making every
+   dark: utility always-on.) */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
     /* Custom colors - using CSS variables for dynamic theming */
@@ -40,367 +30,393 @@ html.dark #moon-icon, html.dark #moon-rays {
         "Source Code Pro", "Roboto Mono", monospace;
 }
 
-/* Force vertical layout for main content wrapper */
-.min-h-screen {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+@layer base {
+    /* Color Variables */
+    :root {
+        /* Light Mode */
+        --background: #f8fafc;
+        --surface: #ffffff;
+        --muted-surface: #f1f5f9;
+        --primary-text: #0f172a;
+        --secondary-text: #6b7280;
+        --disabled-text: #94a3b8;
 
-/* Styles for the personal website */
+        /* Brand Colors */
+        --primary-blue: #3b82f6;
+        --secondary-green: #22c55e;
+        --accent-yellow: #facc15;
 
-/* Color Variables */
-:root {
-    /* Light Mode */
-    --background: #f8fafc;
-    --surface: #ffffff;
-    --muted-surface: #f1f5f9;
-    --primary-text: #0f172a;
-    --secondary-text: #6b7280;
-    --disabled-text: #94a3b8;
+        /* Hover States */
+        --hover-blue: #60a5fa;
+        --hover-green: #4ade80;
+        --soft-yellow-bg: #fef9c3;
+    }
 
-    /* Brand Colors */
-    --primary-blue: #3b82f6;
-    --secondary-green: #22c55e;
-    --accent-yellow: #facc15;
+    /* Dark Mode */
+    .dark {
+        --background: #020617;
+        --surface: #0f172a;
+        --muted-surface: #1e293b;
+        --primary-text: #e2e8f0;
+        --secondary-text: #9ca3af;
+        --disabled-text: #475569;
 
-    /* Hover States */
-    --hover-blue: #60a5fa;
-    --hover-green: #4ade80;
-    --soft-yellow-bg: #fef9c3;
-}
+        --primary-blue: #60a5fa;
+        --secondary-green: #4ade80;
+        --accent-yellow: #fde047;
 
-/* Dark Mode */
-.dark {
-    --background: #020617;
-    --surface: #0f172a;
-    --muted-surface: #1e293b;
-    --primary-text: #e2e8f0;
-    --secondary-text: #9ca3af;
-    --disabled-text: #475569;
+        --hover-blue: #93c5fd;
+        --hover-green: #86efac;
+        --soft-yellow-bg: #713f12;
+    }
 
-    --primary-blue: #60a5fa;
-    --secondary-green: #4ade80;
-    --accent-yellow: #fde047;
+    /* Base Styles. No global margin or padding reset here on purpose:
+       Tailwind preflight already zeroes them, and a global star reset
+       would override spacing utilities. */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 
-    --hover-blue: #93c5fd;
-    --hover-green: #86efac;
-    --soft-yellow-bg: #713f12;
-}
+    body {
+        background-color: var(--background);
+        color: var(--primary-text);
+        font-family:
+            "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+            "Source Code Pro", "Roboto Mono", monospace;
+        line-height: 1.6;
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
+    }
 
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background-color: var(--background);
-    color: var(--primary-text);
-    font-family:
-        "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
-        "Source Code Pro", "Roboto Mono", monospace;
-    line-height: 1.6;
-    transition:
-        background-color 0.3s ease,
-        color 0.3s ease;
-}
-
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    line-height: 1.2;
-}
-
-h1 {
-    font-size: 2.5rem;
-}
-
-h2 {
-    font-size: 2rem;
-}
-
-h3 {
-    font-size: 1.5rem;
-}
-
-/* Global paragraphs - reduce bottom margin */
-p {
-    margin-bottom: 0.25rem;
-}
-
-/* Footer paragraphs - remove margins */
-footer p {
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
-a {
-    color: var(--primary-blue);
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-a:hover {
-    color: var(--hover-blue);
-}
-
-*:focus-visible {
-    outline: 2px solid var(--primary-blue);
-    outline-offset: 2px;
-}
-
-/* Skip-to-content link */
-.skip-link {
-    position: absolute;
-    top: -100%;
-    left: 0;
-    background-color: var(--surface);
-    color: var(--primary-text);
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--primary-blue);
-    z-index: 100;
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
-/* Buttons */
-.btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0;
-    font-weight: 500;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: 1px solid var(--primary-blue);
-    font-size: 1rem;
-}
-
-.btn-primary {
-    background-color: var(--primary-blue);
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #1d4ed8;
-    color: white;
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background-color: var(--secondary-green);
-    color: white;
-}
-
-.btn-secondary:hover {
-    background-color: #15803d;
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* Dark mode buttons */
-.dark .btn-primary {
-    background-color: var(--primary-blue);
-}
-
-.dark .btn-primary:hover {
-    background-color: #1d4ed8;
-}
-
-.dark .btn-secondary {
-    background-color: var(--secondary-green);
-}
-
-.dark .btn-secondary:hover {
-    background-color: #15803d;
-}
-
-/* Cards */
-.card {
-    background-color: var(--surface);
-    border-radius: 0;
-    padding: 1.5rem;
-    border: 1px solid var(--muted-surface);
-    transition: border-color 0.2s ease;
-}
-
-.dark .card {
-    background-color: var(--surface);
-    border-color: var(--muted-surface);
-}
-
-.card:hover {
-    border-color: var(--primary-blue);
-}
-
-.dark .card:hover {
-    border-color: var(--primary-blue);
-}
-
-/* Container */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
-
-/* Section spacing */
-.section {
-    padding: 4rem 0;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 3rem;
-    position: relative;
-}
-
-.section-title::after {
-    content: "";
-    display: block;
-    width: 3rem;
-    height: 2px;
-    background-color: var(--primary-blue);
-    margin: 0.5rem auto;
-}
-
-/* Grid */
-.grid {
-    display: grid;
-    gap: 2rem;
-}
-
-/* Flexbox */
-.flex {
-    display: flex;
-}
-
-.flex-center {
-    justify-content: center;
-    align-items: center;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .section {
-        padding: 2rem 0;
+    /* Typography */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        line-height: 1.2;
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
     }
 
     h2 {
-        font-size: 1.75rem;
+        font-size: 2rem;
     }
 
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    /* Global paragraphs - reduce bottom margin */
+    p {
+        margin-bottom: 0.25rem;
+    }
+
+    /* Footer paragraphs - remove margins */
+    footer p {
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    a {
+        color: var(--primary-blue);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    a:hover {
+        color: var(--hover-blue);
+    }
+
+    *:focus-visible {
+        outline: 2px solid var(--primary-blue);
+        outline-offset: 2px;
+    }
+
+    /* Code/block styling */
+    code,
+    pre {
+        font-family:
+            "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
+            "Source Code Pro", "Roboto Mono", monospace;
+        background-color: var(--muted-surface);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0;
+    }
+}
+
+@layer components {
+    /* Theme toggle icon visibility (ID specificity beats .hidden/.dark:block,
+       no !important needed) */
+    #sun-icon {
+        display: none;
+    }
+
+    html.dark #sun-icon {
+        display: block;
+    }
+
+    #moon-icon {
+        display: block;
+    }
+
+    html.dark #moon-icon {
+        display: none;
+    }
+
+    /* Force vertical layout for main content wrapper */
+    .min-h-screen {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Skip-to-content link */
+    .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 0;
+        background-color: var(--surface);
+        color: var(--primary-text);
+        padding: 0.5rem 1rem;
+        border: 1px solid var(--primary-blue);
+        z-index: 100;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .skip-link:focus {
+        top: 0;
+    }
+
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0;
+        font-weight: 500;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid var(--primary-blue);
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-blue);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #1d4ed8;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: var(--secondary-green);
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #15803d;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    /* Dark mode buttons */
+    .dark .btn-primary {
+        background-color: var(--primary-blue);
+    }
+
+    .dark .btn-primary:hover {
+        background-color: #1d4ed8;
+    }
+
+    .dark .btn-secondary {
+        background-color: var(--secondary-green);
+    }
+
+    .dark .btn-secondary:hover {
+        background-color: #15803d;
+    }
+
+    /* Cards */
+    .card {
+        background-color: var(--surface);
+        border-radius: 0;
+        padding: 1.5rem;
+        border: 1px solid var(--muted-surface);
+        transition: border-color 0.2s ease;
+    }
+
+    .dark .card {
+        background-color: var(--surface);
+        border-color: var(--muted-surface);
+    }
+
+    .card:hover {
+        border-color: var(--primary-blue);
+    }
+
+    .dark .card:hover {
+        border-color: var(--primary-blue);
+    }
+
+    /* Site container (named to avoid colliding with Tailwind's .container) */
+    .site-container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Section spacing */
+    .section {
+        padding: 4rem 0;
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: "";
+        display: block;
+        width: 3rem;
+        height: 2px;
+        background-color: var(--primary-blue);
+        margin: 0.5rem auto;
+    }
+
+    /* Grid */
     .grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        gap: 2rem;
     }
 
-    .container {
-        padding: 0 0.75rem;
+    /* Flexbox */
+    .flex {
+        display: flex;
+    }
+
+    .flex-center {
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .section {
+            padding: 2rem 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.75rem;
+        }
+
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .site-container {
+            padding: 0 0.75rem;
+        }
+    }
+
+    /* Terminal-like enhancements */
+    .border-terminal {
+        border: 1px solid var(--muted-surface);
+    }
+
+    .border-terminal:hover {
+        border-color: var(--primary-blue);
+    }
+
+    /* Terminal window decoration style */
+    .terminal-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        background-color: var(--muted-surface);
+        border-bottom: 1px solid var(--muted-surface);
+    }
+
+    .terminal-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 0;
+    }
+
+    .terminal-dot.red {
+        background-color: #ff5f56;
+    }
+    .terminal-dot.yellow {
+        background-color: #ffbd2e;
+    }
+    .terminal-dot.green {
+        background-color: #27c93f;
+    }
+
+    /* Command prompt style */
+    .prompt {
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
+
+    .prompt::before {
+        content: "$ ";
+        color: var(--secondary-text);
+    }
+
+    /* Sharp-corner design language: components-layer so rounded-*
+       utilities can opt out */
+    *,
+    *::before,
+    *::after {
+        border-radius: 0;
+    }
+
+    /* Section button spacing */
+    .section-buttons {
+        margin-top: 3rem;
+        padding-top: 1rem;
+    }
+
+    /* Connect section grid gap (kept !important: intentionally beats gap-8) */
+    #connect .grid {
+        gap: 2.5rem !important;
+    }
+
+    /* Card button spacing */
+    .card-buttons {
+        gap: 0.3rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-buttons > * + * {
+        margin-top: 1rem;
     }
 }
 
-/* Terminal-like enhancements */
-.border-terminal {
-    border: 1px solid var(--muted-surface);
-}
-
-.border-terminal:hover {
-    border-color: var(--primary-blue);
-}
-
-/* Terminal window decoration style */
-.terminal-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1rem;
-    background-color: var(--muted-surface);
-    border-bottom: 1px solid var(--muted-surface);
-}
-
-.terminal-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 0;
-}
-
-.terminal-dot.red {
-    background-color: #ff5f56;
-}
-.terminal-dot.yellow {
-    background-color: #ffbd2e;
-}
-.terminal-dot.green {
-    background-color: #27c93f;
-}
-
-/* Command prompt style */
-.prompt {
-    color: var(--primary-blue);
-    font-weight: 600;
-}
-
-.prompt::before {
-    content: "$ ";
-    color: var(--secondary-text);
-}
-
-/* Code/block styling */
-code,
-pre {
-    font-family:
-        "JetBrains Mono", "Fira Code", "SF Mono", "Cascadia Code",
-        "Source Code Pro", "Roboto Mono", monospace;
-    background-color: var(--muted-surface);
-    padding: 0.25rem 0.5rem;
-    border-radius: 0;
-}
-
-/* Remove rounded corners globally */
-* {
-    border-radius: 0 !important;
-}
-
-/* Section button spacing fix - overrides Tailwind when needed */
-.section-buttons {
-    margin-top: 3rem !important;
-    padding-top: 1rem;
-}
-
-/* Connect section grid gap fix */
-#connect .grid {
-    gap: 2.5rem !important;
-}
-
-/* Card button spacing fix */
-.card-buttons {
-    gap: 0.3rem !important;
-    display: flex;
-    flex-direction: column;
-}
-
-.card-buttons > * + * {
-    margin-top: 1rem !important;
-}
-
-/* Reduced motion */
+/* Reduced motion kill-switch: deliberately unlayered so it wins over
+   every utility and component rule. */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

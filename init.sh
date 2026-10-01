@@ -142,14 +142,22 @@ fi
 if [ -d "dist" ]; then
   for page in index blog projects publications wishlist research/supplier-data; do
     if [ "$page" = "index" ]; then
-      target="dist/index.html"
+      targets="dist/index.html"
     else
-      target="dist/$page/index.html"
+      # file format (dist/<page>.html) or directory format (dist/<page>/index.html)
+      targets="dist/$page.html dist/$page/index.html"
     fi
-    if [ -f "$target" ]; then
-      ok "$target exists"
+    found=""
+    for target in $targets; do
+      if [ -f "$target" ]; then
+        found="$target"
+        break
+      fi
+    done
+    if [ -n "$found" ]; then
+      ok "$found exists"
     else
-      fail "$target missing"
+      fail "no build artifact for page $page (tried: $targets)"
       EXIT_CODE=1
     fi
   done

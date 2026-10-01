@@ -1,7 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 
-const pageTitle = 'Supplierdaten aus Excel/CSV – Research | Jorge'
+const pageTitle = 'Lieferantendaten aus Excel/CSV – Research | Jorge'
 const pageDescription =
     'Research zu manuellen Workflows mit Lieferantendaten aus Excel- und CSV-Dateien und deren Vorbereitung für ERP- oder Webshop-Importe.'
 const canonicalUrl = 'https://jorgegb.dev/research/supplier-data'
@@ -44,11 +44,13 @@ const questions = [
     jsonLd={webpageLd}
 >
     <header class="bg-surface border-b border-gray-200 sticky top-0 z-50">
-        <div class="container flex justify-between items-center py-3">
+        <div class="site-container flex justify-between items-center py-3">
             <div class="flex items-center gap-3">
                 <img
                     src="/logo.svg"
                     alt="JGB Logo"
+                    width="40"
+                    height="40"
                     class="w-10 h-10"
                 />
                 <span class="text-xl font-bold">jorgegb.dev</span>
@@ -136,7 +138,7 @@ const questions = [
 
     <main id="main" class="flex-1">
         <section class="section bg-surface">
-            <div class="container">
+            <div class="site-container">
                 <div class="research-body">
                     <span
                         class="research-badge text-xs font-mono uppercase tracking-wider text-primary-blue"
@@ -190,7 +192,7 @@ const questions = [
 
                     <h2>Ein paar Fragen</h2>
 
-                    <ol class="flex flex-col gap-5" role="list">
+                    <ol class="flex flex-col gap-5 list-decimal pl-5" role="list">
                         {
                             questions.map((question, index) => (
                                 <li class="flex gap-4 items-start">
@@ -237,7 +239,7 @@ const questions = [
     </main>
 
     <footer class="bg-surface border-t border-gray-200 py-4">
-        <div class="container text-center">
+        <div class="site-container text-center">
             <p class="text-secondary-text">
                 &copy; {new Date().getFullYear()} Jorge García Brizuela. All rights reserved.
             </p>

@@ -6,6 +6,7 @@ interface Props {
   description?: string;
   canonicalUrl?: string;
   lang?: string;
+  robotsContent?: string;
   ogType?: 'profile' | 'website' | 'article';
   ogImage?: { url: string; width: number; height: number; alt?: string };
   jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
@@ -18,6 +19,7 @@ const {
   lang = 'en',
   ogType = 'website',
   ogImage = { url: 'https://jorgegb.dev/og-default.png', width: 1200, height: 630, alt: title },
+  robotsContent = 'index, follow',
   jsonLd,
 } = Astro.props
 
@@ -60,7 +62,7 @@ const structuredData =
     <link rel="icon" href="/logo.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
     <link rel="canonical" href={canonicalUrl} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robotsContent} />
     <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
 
@@ -129,7 +131,7 @@ const structuredData =
     </script>
 
     {structuredData.length > 0 && (
-      <script type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData.length === 1 ? structuredData[0] : structuredData)} />
     )}
   </head>
   <body class="bg-background text-primary-text">
