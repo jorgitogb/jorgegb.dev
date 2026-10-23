@@ -292,6 +292,78 @@ describe('built site', () => {
     )
   })
 
+  it('sitemap <loc> entries equal the canonicals of the built pages', () => {
+    const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8')
+    const locs = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1])
+    const canonicals = built.map(
+      ({ html }) => attrValue(allTags(html, 'link', 'rel="canonical"')[0], 'href')!,
+    )
+    assert.deepEqual([...locs].sort(), [...canonicals].sort())
+  })
+
+  it('every sitemap <url> has a <lastmod> with a valid date', () => {
+    const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8')
+    const urls = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1])
+    assert.ok(urls.length > 0, 'sitemap has no <url> entries')
+    for (const url of urls) {
+      const lastmod = url.match(/<lastmod>([^<]*)<\/lastmod>/)?.[1]
+      assert.ok(lastmod, `no <lastmod> in ${url}`)
+      assert.ok(!Number.isNaN(Date.parse(lastmod)), `invalid <lastmod> "${lastmod}"`)
+    }
+  })
+
+  it('every page has og:site_name "jorgegb.dev"', () => {
+    for (const { page, html } of built) {
+      const tags = allTags(html, 'meta', 'property="og:site_name"')
+      assert.equal(tags.length, 1, `/${page}: expected 1 og:site_name`)
+      assert.equal(attrValue(tags[0], 'content'), 'jorgegb.dev', `/${page}: og:site_name`)
+    }
+  })
+
+  it('every page has twitter:site "@jorge_garciab"', () => {
+    for (const { page, html } of built) {
+      const tags = allTags(html, 'meta', 'name="twitter:site"')
+      assert.equal(tags.length, 1, `/${page}: expected 1 twitter:site`)
+      assert.equal(attrValue(tags[0], 'content'), '@jorge_garciab', `/${page}: twitter:site`)
+    }
+  })
+
+  it('og:locale is en_US, or de_DE on the lang="de" page', () => {
+    for (const { page, html } of built) {
+      const lang = html.match(/<html[^>]*\slang="([^"]*)"/)?.[1]
+      const tags = allTags(html, 'meta', 'property="og:locale"')
+      assert.equal(tags.length, 1, `/${page}: expected 1 og:locale`)
+      assert.equal(
+        attrValue(tags[0], 'content'),
+        lang === 'de' ? 'de_DE' : 'en_US',
+        `/${page}: og:locale`,
+      )
+    }
+  })
+
+  it('og:image:alt describes the image, not the page title', () => {
+    for (const { page, html } of built) {
+      const tags = allTags(html, 'meta', 'property="og:image:alt"')
+      assert.equal(tags.length, 1, `/${page}: expected 1 og:image:alt`)
+      assert.equal(
+        attrValue(tags[0], 'content'),
+        'Portrait of Jorge García Brizuela',
+        `/${page}: og:image:alt`,
+      )
+    }
+  })
+
+  it('every title except home ends with " — Jorge GB"', () => {
+    for (const { page, html } of built.filter((b) => b.page !== '')) {
+      assert.ok(
+        titles(html)[0].endsWith(' — Jorge GB'),
+        `/${page}: title "${titles(html)[0]}" does not end with " — Jorge GB"`,
+      )
+    }
+    const german = built.find((b) => b.page === 'research/supplier-data')!
+    assert.equal(titles(german.html)[0], 'Lieferantendaten aus Excel/CSV — Jorge GB')
+  })
+
   it('the home support button reads "Support me on Ko-fi" and opens Ko-fi', () => {
     const home = built.find((b) => b.page === '')!.html
     const kofi = [...home.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)]
@@ -395,5 +467,10 @@ describe('404 page', () => {
     assert.equal(robots.length, 1)
     assert.match(attrValue(robots[0], 'content') ?? '', /noindex/)
     assert.ok(ids(html).has('main'))
+  })
+
+  it('declares no canonical and no og:url', () => {
+    assert.deepEqual(allTags(html, 'link', 'rel="canonical"'), [])
+    assert.deepEqual(allTags(html, 'meta', 'property="og:url"'), [])
   })
 })

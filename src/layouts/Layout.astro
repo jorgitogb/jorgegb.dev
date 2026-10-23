@@ -4,7 +4,7 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
-  canonicalUrl?: string;
+  canonicalUrl?: string | null;
   lang?: string;
   robotsContent?: string;
   ogType?: 'profile' | 'website' | 'article';
@@ -18,7 +18,7 @@ const {
   canonicalUrl = 'https://jorgegb.dev/',
   lang = 'en',
   ogType = 'website',
-  ogImage = { url: 'https://jorgegb.dev/og-default.png', width: 1200, height: 630, alt: title },
+  ogImage = { url: 'https://jorgegb.dev/og-default.png', width: 1200, height: 630, alt: 'Portrait of Jorge García Brizuela' },
   robotsContent = 'index, follow',
   jsonLd,
 } = Astro.props
@@ -61,21 +61,24 @@ const structuredData =
     <meta name="description" content={description} />
     <link rel="icon" href="/logo.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
-    <link rel="canonical" href={canonicalUrl} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
     <meta name="robots" content={robotsContent} />
     <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0f172a" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="jorgegb.dev" />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalUrl} />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={ogImage.url} />
     <meta property="og:image:width" content={String(ogImage.width)} />
     <meta property="og:image:height" content={String(ogImage.height)} />
     {ogImage.alt && <meta property="og:image:alt" content={ogImage.alt} />}
 
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@jorge_garciab" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage.url} />
