@@ -42,6 +42,10 @@ function attrValue(tag: string, attr: string): string | null {
   return m ? m[1] : null
 }
 
+function anchors(html: string): string[] {
+  return [...html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map((m) => m[0])
+}
+
 function titles(html: string): string[] {
   return [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((m) =>
     m[1].trim(),
@@ -366,8 +370,7 @@ describe('built site', () => {
 
   it('the home support button reads "Support me on Ko-fi" and opens Ko-fi', () => {
     const home = built.find((b) => b.page === '')!.html
-    const kofi = [...home.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)]
-      .map((m) => m[0])
+    const kofi = anchors(home)
       .filter((a) => attrValue(a, 'href')?.startsWith('https://ko-fi.com/'))
     assert.equal(kofi.length, 1, `expected 1 Ko-fi link on /, got ${kofi.length}`)
     const text = kofi[0]
@@ -426,7 +429,7 @@ describe('built site', () => {
       [/ko-fi/i, ['ko-fi.com']],
     ]
     for (const { page, html } of built) {
-      for (const [anchor] of html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)) {
+      for (const anchor of anchors(html)) {
         const text = anchor.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
         const hosts = services.filter(([re]) => re.test(text)).flatMap(([, h]) => h)
         if (hosts.length === 0) continue
@@ -441,6 +444,69 @@ describe('built site', () => {
         )
       }
     }
+  })
+})
+
+describe('home page sections', () => {
+  let main = ''
+
+  before(() => {
+    main = htmlFor('').match(/<main\b[\s\S]*<\/main>/)?.[0] ?? ''
+    assert.ok(main, 'no <main> on /')
+  })
+
+  it('adjacent sections have different background classes', () => {
+    const sections = [...main.matchAll(/<section\b[^>]*>/g)].map((m) => ({
+      id: attrValue(m[0], 'id') ?? 'hero',
+      bg: (attrValue(m[0], 'class') ?? '')
+        .split(/\s+/)
+        .filter((c) => c.startsWith('bg-'))
+        .join(' '),
+    }))
+    assert.ok(sections.length > 1, 'expected several sections in <main>')
+    for (let i = 1; i < sections.length; i++) {
+      assert.notEqual(
+        sections[i].bg,
+        sections[i - 1].bg,
+        `#${sections[i - 1].id} and #${sections[i].id} share "${sections[i].bg}"`,
+      )
+    }
+  })
+
+  it('the hero and its container have no vertical padding utility besides .section', () => {
+    const hero = main.match(/<section\b[^>]*>\s*<div\b[^>]*>/)?.[0] ?? ''
+    assert.ok(hero, 'no hero section with a container in <main>')
+    const padding = [...hero.matchAll(/\bclass="([^"]*)"/g)]
+      .flatMap((m) => m[1].split(/\s+/))
+      .filter((c) => /^(?:[\w-]+:)*-?p[ytb]-/.test(c))
+    assert.deepEqual(padding, [], 'hero has extra vertical padding')
+  })
+
+  const ALERT_STROKES = ['M12 8v4', 'M12 16h.01']
+
+  function buttonIcon(href: string): string | undefined {
+    const anchor = anchors(main)
+      .find((a) => attrValue(a, 'href') === href)
+    assert.ok(anchor, `no link to ${href} in <main>`)
+    return anchor.match(/<svg\b[\s\S]*?<\/svg>/)?.[0]
+  }
+
+  it('the Wishlist button has a decorative icon that is not the alert glyph', () => {
+    const icon = buttonIcon('/wishlist')
+    assert.ok(icon, 'Wishlist button has no icon')
+    for (const stroke of ALERT_STROKES) {
+      assert.ok(!icon.includes(stroke), `Wishlist icon still draws "${stroke}"`)
+    }
+    assert.match(icon, /<svg\b[^>]*aria-hidden="true"/, 'icon is not aria-hidden')
+  })
+
+  it('the Ko-fi button has a decorative icon without alert strokes', () => {
+    const icon = buttonIcon('https://ko-fi.com/jorgegb')
+    assert.ok(icon, 'Ko-fi button has no icon')
+    for (const stroke of ALERT_STROKES) {
+      assert.ok(!icon.includes(stroke), `Ko-fi icon still draws "${stroke}"`)
+    }
+    assert.match(icon, /<svg\b[^>]*aria-hidden="true"/, 'icon is not aria-hidden')
   })
 })
 
