@@ -173,16 +173,14 @@ const collectionLd = {
                                     </p>
                                     <p class="mb-3">{describeProject(pkg.name, pkg.description, null)}</p>
                                     <p class="text-xs font-mono text-secondary-text mb-3">v{pkg.version}</p>
-                                    {pkg.repositoryUrl && (
-                                        <a
-                                            href={pkg.repositoryUrl}
-                                            target="_blank"
-                                            rel="noopener"
-                                            class="text-primary-blue hover:underline font-mono text-sm"
-                                        >
-                                            View on npm →
-                                        </a>
-                                    )}
+                                    <a
+                                        href={`https://www.npmjs.com/package/${pkg.name}`}
+                                        target="_blank"
+                                        rel="noopener"
+                                        class="text-primary-blue hover:underline font-mono text-sm"
+                                    >
+                                        View on npm →
+                                    </a>
                                 </div>
                             ))}
                         </div>

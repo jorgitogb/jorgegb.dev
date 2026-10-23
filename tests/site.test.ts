@@ -76,6 +76,29 @@ function resolves(localPath: string): boolean {
   return existsSync(join(dist, clean))
 }
 
+/** npm package cards in a page: the package name (from "npm i <name>") and
+ *  the "View on npm →" links that follow it, up to the next card. */
+function npmCards(html: string): Array<{ name: string; links: string[] }> {
+  const starts = [...html.matchAll(/npm i ([^<\s]+)/g)]
+  return starts.map((m, i) => {
+    const chunk = html.slice(m.index, starts[i + 1]?.index)
+    const links = [...chunk.matchAll(/<a\b[^>]*>\s*View on npm →\s*<\/a>/g)]
+    return { name: m[1], links: links.map((l) => attrValue(l[0], 'href') ?? '') }
+  })
+}
+
+const NO_NPM_CARDS =
+  'no npm cards in this build (npm registry unreachable at build time)'
+
+/** npm cards on the pages that list packages (`/` and `/projects`). */
+function builtNpmCards(built: Array<{ page: string; html: string }>) {
+  return built
+    .filter((b) => b.page === '' || b.page === 'projects')
+    .flatMap(({ page, html }) =>
+      npmCards(html).map((card) => ({ page, ...card })),
+    )
+}
+
 describe('built site', () => {
   const built: Array<{ page: string; html: string }> = []
 
@@ -267,6 +290,85 @@ describe('built site', () => {
       !sitemap.includes('/404'),
       'sitemap must not list the 404 page',
     )
+  })
+
+  it('the home support button reads "Support me on Ko-fi" and opens Ko-fi', () => {
+    const home = built.find((b) => b.page === '')!.html
+    const kofi = [...home.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)]
+      .map((m) => m[0])
+      .filter((a) => attrValue(a, 'href')?.startsWith('https://ko-fi.com/'))
+    assert.equal(kofi.length, 1, `expected 1 Ko-fi link on /, got ${kofi.length}`)
+    const text = kofi[0]
+      .replace(/<[^>]*>/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+    assert.equal(text, 'Support me on Ko-fi')
+    assert.equal(attrValue(kofi[0], 'href'), 'https://ko-fi.com/jorgegb')
+  })
+
+  it('no page mentions Buy Me A Coffee (support goes through Ko-fi)', () => {
+    for (const { page, html } of built) {
+      assert.ok(
+        !/buy me a coffee/i.test(html),
+        `/${page}: still mentions "Buy Me A Coffee"`,
+      )
+    }
+  })
+
+  it('every "View on npm →" link opens its own package on npmjs.com', (t) => {
+    const cards = builtNpmCards(built)
+    if (cards.length === 0) {
+      t.skip(NO_NPM_CARDS)
+      return
+    }
+    for (const { page, name, links } of cards) {
+      for (const href of links) {
+        assert.equal(
+          href,
+          `https://www.npmjs.com/package/${name}`,
+          `/${page}: "View on npm →" for ${name} points elsewhere`,
+        )
+      }
+    }
+  })
+
+  it('every npm card has exactly one "View on npm →" link', (t) => {
+    const cards = builtNpmCards(built)
+    if (cards.length === 0) {
+      t.skip(NO_NPM_CARDS)
+      return
+    }
+    for (const { page, name, links } of cards) {
+      assert.equal(
+        links.length,
+        1,
+        `/${page}: ${name} has ${links.length} "View on npm →" links, expected 1`,
+      )
+    }
+  })
+
+  it('a link whose text names GitHub, npm or Ko-fi opens that service', () => {
+    const services: Array<[RegExp, string[]]> = [
+      [/github/i, ['github.com']],
+      [/\bnpm\b/i, ['npmjs.com', 'www.npmjs.com']],
+      [/ko-fi/i, ['ko-fi.com']],
+    ]
+    for (const { page, html } of built) {
+      for (const [anchor] of html.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)) {
+        const text = anchor.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim()
+        const hosts = services.filter(([re]) => re.test(text)).flatMap(([, h]) => h)
+        if (hosts.length === 0) continue
+        const href = attrValue(anchor, 'href') ?? ''
+        let host = ''
+        try {
+          host = new URL(href).hostname
+        } catch {}
+        assert.ok(
+          hosts.includes(host),
+          `/${page}: link "${text}" points to ${href || '(no href)'}, expected ${hosts.join(' or ')}`,
+        )
+      }
+    }
   })
 })
 
