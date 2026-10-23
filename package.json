@@ -11,7 +11,6 @@
     "build:assets": "node scripts/build-assets.mjs"
   },
   "dependencies": {
-    "@mseep/linear-mcp": "^78.0.1",
     "@tailwindcss/vite": "^4.2.3",
     "astro": "^5.0.0",
     "tailwindcss": "^4.2.3"
