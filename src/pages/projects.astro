@@ -129,7 +129,7 @@ const collectionLd = {
                                     <p class="font-mono text-sm text-secondary-text mb-1">
                                         <span class="text-primary-blue">$</span> gh repo {repo.name}
                                         {repo.stargazersCount > 0 && (
-                                            <span class="float-right text-yellow-500">★ {repo.stargazersCount}</span>
+                                            <span class="float-right text-star">★ {repo.stargazersCount}</span>
                                         )}
                                     </p>
                                     <p class="mb-3">{describeProject(repo.name, repo.description, repo.language)}</p>
@@ -169,7 +169,7 @@ const collectionLd = {
                                 <div class="card">
                                     <p class="font-mono text-sm text-secondary-text mb-1">
                                         <span class="text-primary-blue">$</span> npm i {pkg.name}
-                                        <span class="float-right text-green-500">↓ {formatDownloads(pkg.weeklyDownloads)}/wk</span>
+                                        <span class="float-right text-downloads">↓ {formatDownloads(pkg.weeklyDownloads)}/wk</span>
                                     </p>
                                     <p class="mb-3">{describeProject(pkg.name, pkg.description, null)}</p>
                                     <p class="text-xs font-mono text-secondary-text mb-3">v{pkg.version}</p>

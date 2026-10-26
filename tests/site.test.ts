@@ -1,6 +1,6 @@
 import { describe, it, before } from 'node:test'
 import assert from 'node:assert/strict'
-import { existsSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -538,5 +538,155 @@ describe('404 page', () => {
   it('declares no canonical and no og:url', () => {
     assert.deepEqual(allTags(html, 'link', 'rel="canonical"'), [])
     assert.deepEqual(allTags(html, 'meta', 'property="og:url"'), [])
+  })
+})
+
+describe('WCAG AA contrast', () => {
+  const AA = 4.5
+  let css = ''
+
+  before(() => {
+    const file = readdirSync(join(dist, '_astro')).find((f) => f.endsWith('.css'))
+    assert.ok(file, 'no built CSS in dist/_astro')
+    css = readFileSync(join(dist, '_astro', file), 'utf8')
+  })
+
+  // Hex tokens of one theme, from the standalone `:root{…}` / `.dark{…}` rules.
+  function tokens(theme: 'light' | 'dark'): Record<string, string> {
+    const selector = theme === 'light' ? ':root' : '.dark'
+    const body =
+      css.match(new RegExp(`(?:^|})${selector.replace('.', '\\.')}\\{([^}]*)\\}`))?.[1] ?? ''
+    assert.ok(body, `no ${selector} rule in the built CSS`)
+    return Object.fromEntries(
+      [...body.matchAll(/(--[\w-]+):(#[0-9a-f]{3,6})\b/g)].map((m) => [m[1], m[2]]),
+    )
+  }
+
+  function luminance(hex: string): number {
+    const h = hex.length === 4 ? [...hex.slice(1)].map((c) => c + c).join('') : hex.slice(1)
+    const [r, g, b] = [0, 2, 4].map((i) => {
+      const c = parseInt(h.slice(i, i + 2), 16) / 255
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+    })
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+  }
+
+  function contrast(a: string, b: string): number {
+    const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+    return (hi + 0.05) / (lo + 0.05)
+  }
+
+  function assertAA(fg: string, bg: string, what: string) {
+    const ratio = contrast(fg, bg)
+    assert.ok(ratio >= AA, `${what}: ${fg} on ${bg} is ${ratio.toFixed(2)}:1`)
+  }
+
+  // Token name a plain `a{color:var(--x)}` rule uses.
+  function linkToken(selector: string): string {
+    const name = css.match(new RegExp(`(?:^|})${selector}\\{color:var\\((--[\\w-]+)\\)`))?.[1]
+    assert.ok(name, `no "${selector}" colour rule using a token`)
+    return name
+  }
+
+  // One declaration of a rule; the dark theme's `.dark <selector>` rule wins when it has one.
+  function findDeclaration(selector: string, prop: string, theme: 'light' | 'dark') {
+    const find = (sel: string) => {
+      const body =
+        css.match(new RegExp(`(?:^|})${sel.replace(/\./g, '\\.')}\\{([^}]*)\\}`))?.[1] ?? ''
+      return body.match(new RegExp(`(?:^|;)${prop}:([^;]+)`))?.[1]
+    }
+    return (theme === 'dark' && find(`.dark ${selector}`)) || find(selector)
+  }
+
+  function declaration(selector: string, prop: string, theme: 'light' | 'dark'): string {
+    const value = findDeclaration(selector, prop, theme)
+    assert.ok(value, `no ${prop} on ${selector} (${theme})`)
+    return value
+  }
+
+  // Border colour of a button: its own `border-color`, else the colour of `.btn`'s border shorthand.
+  function borderColor(selector: string, theme: 'light' | 'dark'): string {
+    const own = findDeclaration(selector, 'border-color', theme)
+    return own ?? declaration('.btn', 'border', theme).split(' ').pop()!
+  }
+
+  function resolve(value: string, theme: 'light' | 'dark'): string {
+    const name = value.match(/^var\((--[\w-]+)\)$/)?.[1]
+    return name ? tokens(theme)[name] : value
+  }
+
+  for (const theme of ['light', 'dark'] as const) {
+    it(`text links reach ${AA}:1 on background, surface and muted (${theme})`, () => {
+      const t = tokens(theme)
+      const name = linkToken('a')
+      for (const bg of ['--background', '--surface', '--muted-surface']) {
+        assertAA(t[name], t[bg], `${theme}: ${name} on ${bg}`)
+      }
+    })
+
+    it(`text link hover reaches ${AA}:1 on background, surface and muted (${theme})`, () => {
+      const t = tokens(theme)
+      const name = linkToken('a:hover')
+      for (const bg of ['--background', '--surface', '--muted-surface']) {
+        assertAA(t[name], t[bg], `${theme}: ${name} on ${bg}`)
+      }
+    })
+
+    it(`the primary button label reaches ${AA}:1 on its fill and hover fill (${theme})`, () => {
+      for (const state of ['.btn-primary', '.btn-primary:hover']) {
+        const label = resolve(declaration(state, 'color', theme), theme)
+        const fill = resolve(declaration(state, 'background-color', theme), theme)
+        assertAA(label, fill, `${theme}: ${state} label on fill`)
+      }
+    })
+
+    it(`the secondary button label reaches ${AA}:1 and its border matches its fill (${theme})`, () => {
+      for (const state of ['.btn-secondary', '.btn-secondary:hover']) {
+        const label = resolve(declaration(state, 'color', theme), theme)
+        const fill = resolve(declaration(state, 'background-color', theme), theme)
+        assertAA(label, fill, `${theme}: ${state} label on fill`)
+      }
+      const fill = resolve(declaration('.btn-secondary', 'background-color', theme), theme)
+      const border = resolve(borderColor('.btn-secondary', theme), theme)
+      assert.equal(border, fill, `${theme}: .btn-secondary border ${border} differs from its fill ${fill}`)
+    })
+
+    it(`the primary button border matches its fill (${theme})`, () => {
+      const fill = resolve(declaration('.btn-primary', 'background-color', theme), theme)
+      const border = resolve(borderColor('.btn-primary', theme), theme)
+      assert.equal(border, fill, `${theme}: .btn-primary border ${border} differs from its fill ${fill}`)
+    })
+  }
+
+  it(`star counts use the star token, which reaches ${AA}:1 on the card surface`, () => {
+    for (const page of ['', 'projects']) {
+      const spans = [...htmlFor(page).matchAll(/<span class="([^"]*)">★/g)].map((m) => m[1])
+      assert.ok(spans.length > 0, `/${page || ''}: no star counts found`)
+      for (const classes of spans) {
+        assert.ok(classes.includes('text-star'), `/${page}: star count has classes "${classes}", expected text-star`)
+        assert.ok(!/\btext-yellow-/.test(classes), `/${page}: star count still uses a text-yellow-* class`)
+      }
+    }
+    for (const theme of ['light', 'dark'] as const) {
+      const t = tokens(theme)
+      assert.ok(t['--star'], `no --star token (${theme})`)
+      assertAA(t['--star'], t['--surface'], `${theme}: --star on surface`)
+    }
+  })
+
+  it(`weekly downloads use the downloads token, which reaches ${AA}:1 on the card surface`, () => {
+    for (const page of ['', 'projects']) {
+      const spans = [...htmlFor(page).matchAll(/<span class="([^"]*)">↓/g)].map((m) => m[1])
+      assert.ok(spans.length > 0, `/${page}: no weekly downloads found`)
+      for (const classes of spans) {
+        assert.ok(classes.includes('text-downloads'), `/${page}: weekly downloads have classes "${classes}", expected text-downloads`)
+        assert.ok(!/\btext-green-/.test(classes), `/${page}: weekly downloads still use a text-green-* class`)
+      }
+    }
+    for (const theme of ['light', 'dark'] as const) {
+      const t = tokens(theme)
+      assert.ok(t['--downloads'], `no --downloads token (${theme})`)
+      assertAA(t['--downloads'], t['--surface'], `${theme}: --downloads on surface`)
+    }
   })
 })
