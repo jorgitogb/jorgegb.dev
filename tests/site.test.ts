@@ -690,3 +690,48 @@ describe('WCAG AA contrast', () => {
     }
   })
 })
+
+describe('heading levels', () => {
+  const builtPages = [...pages.map(htmlFor), readFileSync(join(dist, '404.html'), 'utf8')]
+  const labels = [...pages.map((p) => `/${p}`), '/404']
+
+  function headingLevels(html: string): number[] {
+    return [...html.matchAll(/<h([1-6])[\s>]/g)].map((m) => Number(m[1]))
+  }
+
+  it('starts at the h1 and never skips a level on any page', () => {
+    builtPages.forEach((html, i) => {
+      const levels = headingLevels(html)
+      assert.equal(levels[0], 1, `${labels[i]}: first heading is h${levels[0]}, expected h1`)
+      for (let j = 1; j < levels.length; j++) {
+        assert.ok(
+          levels[j] <= levels[j - 1] + 1,
+          `${labels[i]}: h${levels[j - 1]} is followed by h${levels[j]} (headings: ${levels.map((l) => `h${l}`).join(' ')})`,
+        )
+      }
+    })
+  })
+
+  it('makes "GitHub Projects" and "npm Packages" h2 on /projects', () => {
+    const html = htmlFor('projects')
+    for (const title of ['GitHub Projects', 'npm Packages']) {
+      assert.match(
+        html,
+        new RegExp(`<h2[^>]*>\\s*${title}\\s*</h2>`),
+        `/projects: "${title}" is not an h2`,
+      )
+    }
+  })
+
+  it('makes every card title h2 on /blog, /publications and /wishlist', () => {
+    for (const page of ['blog', 'publications', 'wishlist']) {
+      const levels = headingLevels(htmlFor(page))
+      assert.ok(levels.length > 1, `/${page}: no card titles found`)
+      assert.deepEqual(
+        levels.slice(1),
+        levels.slice(1).map(() => 2),
+        `/${page}: card titles are not all h2 (headings: ${levels.map((l) => `h${l}`).join(' ')})`,
+      )
+    }
+  })
+})
