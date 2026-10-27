@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import { posts } from '../data/blog-posts'
 
 const pageTitle = 'Blog — Jorge GB'
-const pageDescription = 'Posts on FAIR data, reproducible workflows, and open science infrastructure.'
+const pageDescription = 'Writing on FAIR data, research software and open science — first post coming soon.'
 
 const collectionLd = {
   '@context': 'https://schema.org',
@@ -153,7 +153,7 @@ const postsLd = posts.map((post) => ({
                 {posts.length === 0 && (
                     <div class="card text-center">
                         <p class="text-secondary-text">
-                            No blog posts yet. Check back soon.
+                            First post coming soon.
                         </p>
                     </div>
                 )}

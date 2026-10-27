@@ -587,9 +587,18 @@ const websiteLd = {
                         ))}
                     </div>
                 )}
-                <div class="text-center section-buttons">
-                    <a href="/blog" class="btn btn-secondary">View All Posts</a>
-                </div>
+                {posts.length === 0 && (
+                    <div class="card text-center">
+                        <p class="text-secondary-text">
+                            First post coming soon.
+                        </p>
+                    </div>
+                )}
+                {posts.length > 0 && (
+                    <div class="text-center section-buttons">
+                        <a href="/blog" class="btn btn-secondary">View All Posts</a>
+                    </div>
+                )}
             </div>
         </section>
 

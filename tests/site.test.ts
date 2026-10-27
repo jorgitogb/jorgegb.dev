@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { posts } from '../src/data/blog-posts.ts'
 
 // Built-site assertions. Run after `astro build` (`pnpm test` wires this).
 // These read dist/ files only — no network, fully deterministic.
@@ -723,8 +724,8 @@ describe('heading levels', () => {
     }
   })
 
-  it('makes every card title h2 on /blog, /publications and /wishlist', () => {
-    for (const page of ['blog', 'publications', 'wishlist']) {
+  it('makes every card title h2 on /publications and /wishlist', () => {
+    for (const page of ['publications', 'wishlist']) {
       const levels = headingLevels(htmlFor(page))
       assert.ok(levels.length > 1, `/${page}: no card titles found`)
       assert.deepEqual(
@@ -733,5 +734,70 @@ describe('heading levels', () => {
         `/${page}: card titles are not all h2 (headings: ${levels.map((l) => `h${l}`).join(' ')})`,
       )
     }
+  })
+})
+
+describe('blog placeholders', () => {
+  it('shows none of the three placeholder post titles on /blog or /', () => {
+    const placeholderTitles = [
+      'Implementing FAIR Data Principles in Research Pipelines',
+      'Building Reproducible Computational Workflows with Containers',
+      'Why Open Science Infrastructure Matters for the Next Decade',
+    ]
+    for (const page of ['blog', '']) {
+      const html = htmlFor(page)
+      for (const title of placeholderTitles) {
+        assert.ok(
+          !html.includes(title),
+          `/${page}: still shows placeholder post "${title}"`,
+        )
+      }
+    }
+  })
+
+  it('shows "coming soon" on /blog exactly when there are no posts', () => {
+    const main = htmlFor('blog').match(/<main[\s\S]*<\/main>/)?.[0] ?? ''
+    assert.equal(
+      /first post coming soon\./i.test(main),
+      posts.length === 0,
+      `/blog: "First post coming soon." should be shown exactly when posts is empty (posts: ${posts.length})`,
+    )
+  })
+
+  it('shows "coming soon" and no "View All Posts" in the home Blog section exactly when there are no posts', () => {
+    const section =
+      htmlFor('').match(/<section id="blog"[\s\S]*?<\/section>/)?.[0] ?? ''
+    assert.ok(section, '/: no #blog section found')
+    const empty = posts.length === 0
+    assert.equal(
+      /first post coming soon\./i.test(section),
+      empty,
+      `/: #blog "First post coming soon." should be shown exactly when posts is empty (posts: ${posts.length})`,
+    )
+    assert.equal(
+      section.includes('View All Posts'),
+      !empty,
+      `/: #blog "View All Posts" should be shown exactly when there are posts (posts: ${posts.length})`,
+    )
+  })
+
+  it('lists one BlogPosting in the /blog JSON-LD per post', () => {
+    const types = jsonLdBlocks(htmlFor('blog')).map((b) => JSON.parse(b)['@type'])
+    assert.ok(types.includes('CollectionPage'), '/blog: no CollectionPage JSON-LD')
+    assert.equal(
+      types.filter((t) => t === 'BlogPosting').length,
+      posts.length,
+      `/blog: BlogPosting JSON-LD entries should equal posts (posts: ${posts.length})`,
+    )
+  })
+
+  it('says "first post coming soon" in the /blog meta description exactly when there are no posts', () => {
+    const tag = allTags(htmlFor('blog'), 'meta', 'name="description"')[0]
+    const description = attrValue(tag, 'content') ?? ''
+    assert.equal(
+      /first post coming soon/i.test(description),
+      posts.length === 0,
+      `/blog: meta description "${description}" should say "first post coming soon" exactly when posts is empty (posts: ${posts.length})`,
+    )
   })
 })

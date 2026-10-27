@@ -3,10 +3,6 @@ import assert from 'node:assert/strict'
 import { posts } from '../src/data/blog-posts.ts'
 
 describe('blog posts data', () => {
-  it('has at least one post', () => {
-    assert.ok(posts.length > 0, 'expected at least one blog post')
-  })
-
   it('every post has all required non-empty fields', () => {
     for (const post of posts) {
       for (const field of [
