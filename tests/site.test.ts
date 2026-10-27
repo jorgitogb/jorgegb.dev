@@ -300,8 +300,11 @@ describe('built site', () => {
   it('sitemap <loc> entries equal the canonicals of the built pages', () => {
     const sitemap = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8')
     const locs = [...sitemap.matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1])
-    const canonicals = built.map(
-      ({ html }) => attrValue(allTags(html, 'link', 'rel="canonical"')[0], 'href')!,
+    const postHtmls = readdirSync(join(dist, 'blog'))
+      .filter((f) => f.endsWith('.html'))
+      .map((f) => readFileSync(join(dist, 'blog', f), 'utf8'))
+    const canonicals = [...built.map(({ html }) => html), ...postHtmls].map(
+      (html) => attrValue(allTags(html, 'link', 'rel="canonical"')[0], 'href')!,
     )
     assert.deepEqual([...locs].sort(), [...canonicals].sort())
   })
@@ -782,7 +785,9 @@ describe('blog placeholders', () => {
   })
 
   it('lists one BlogPosting in the /blog JSON-LD per post', () => {
-    const types = jsonLdBlocks(htmlFor('blog')).map((b) => JSON.parse(b)['@type'])
+    const types = jsonLdBlocks(htmlFor('blog'))
+      .flatMap((b) => [JSON.parse(b)].flat())
+      .map((b) => b['@type'])
     assert.ok(types.includes('CollectionPage'), '/blog: no CollectionPage JSON-LD')
     assert.equal(
       types.filter((t) => t === 'BlogPosting').length,
@@ -799,5 +804,37 @@ describe('blog placeholders', () => {
       posts.length === 0,
       `/blog: meta description "${description}" should say "first post coming soon" exactly when posts is empty (posts: ${posts.length})`,
     )
+  })
+})
+
+describe('blog cards link to the post pages', () => {
+  it('every Read more link on /blog goes to /blog/<slug>', () => {
+    const main = htmlFor('blog').match(/<main[\s\S]*<\/main>/)?.[0] ?? ''
+    const readMore = anchors(main)
+      .filter((a) => a.includes('Read more'))
+      .map((a) => attrValue(a, 'href'))
+    assert.deepEqual(
+      readMore,
+      posts.map((post) => `/blog/${post.slug}`),
+    )
+  })
+
+  it('every BlogPosting url in the /blog JSON-LD is the post page', () => {
+    const urls = jsonLdBlocks(htmlFor('blog'))
+      .flatMap((b) => [JSON.parse(b)].flat())
+      .filter((b) => b['@type'] === 'BlogPosting')
+      .map((b) => b.url)
+    assert.deepEqual(
+      urls,
+      posts.map((post) => `https://jorgegb.dev/blog/${post.slug}`),
+    )
+  })
+
+  it('every card in the home Blog section links to /blog/<slug>', () => {
+    const section =
+      htmlFor('').match(/<section id="blog"[\s\S]*?<\/section>/)?.[0] ?? ''
+    const cards = posts.slice(0, 3).map((post) => `/blog/${post.slug}`)
+    const links = hrefs(section).filter((href) => href.startsWith('/blog/'))
+    assert.deepEqual(links, cards)
   })
 })

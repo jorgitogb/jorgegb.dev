@@ -1,0 +1,29 @@
+---
+import type { BlogPost } from '../data/blog-posts'
+
+interface Props {
+  post: BlogPost
+  headingLevel: 'h2' | 'h3'
+}
+
+const { post, headingLevel: Heading } = Astro.props
+---
+
+<div class="card">
+    <p class="text-xs font-mono text-secondary-text mb-2">
+        {post.date}
+    </p>
+    <Heading class="text-lg font-semibold mb-2">{post.title}</Heading>
+    <p class="text-sm text-secondary-text mb-3">{post.description}</p>
+    <div class="flex items-center gap-2 mb-3 flex-wrap">
+        {post.tags.map((tag) => (
+            <span class="text-xs font-mono text-primary-blue border border-gray-300 px-2 py-0.5">{tag}</span>
+        ))}
+    </div>
+    <a
+        href={`/blog/${post.slug}`}
+        class="text-primary-blue hover:underline font-mono text-sm"
+    >
+        Read more →
+    </a>
+</div>

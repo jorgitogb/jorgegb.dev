@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { describeProject, fetchGitHubRepos, fetchNpmPackages } from "../lib/projects";
 import { posts } from "../data/blog-posts";
+import BlogCard from "../components/BlogCard.astro";
 
 const [repos, packages] = await Promise.all([fetchGitHubRepos(), fetchNpmPackages()])
 
@@ -572,18 +573,7 @@ const websiteLd = {
                 {posts.length > 0 && (
                     <div class="grid md:grid-cols-2 gap-4">
                         {posts.slice(0, 3).map((post) => (
-                            <div class="card">
-                                <p class="text-xs font-mono text-secondary-text mb-2">
-                                    {post.date}
-                                </p>
-                                <h3 class="text-lg font-semibold mb-2">{post.title}</h3>
-                                <p class="text-sm text-secondary-text mb-3">{post.description}</p>
-                                <div class="flex items-center gap-2 mb-3 flex-wrap">
-                                    {post.tags.map((tag) => (
-                                        <span class="text-xs font-mono text-primary-blue border border-gray-300 px-2 py-0.5">{tag}</span>
-                                    ))}
-                                </div>
-                            </div>
+                            <BlogCard post={post} headingLevel="h3" />
                         ))}
                     </div>
                 )}

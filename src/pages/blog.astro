@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import { posts } from '../data/blog-posts'
+import BlogCard from '../components/BlogCard.astro'
+import { blogPostingLd } from '../lib/blog'
 
 const pageTitle = 'Blog — Jorge GB'
-const pageDescription = 'Writing on FAIR data, research software and open science — first post coming soon.'
+const pageDescription = 'Writing on FAIR data, research software and open science.'
 
 const collectionLd = {
   '@context': 'https://schema.org',
@@ -12,20 +14,7 @@ const collectionLd = {
   url: 'https://jorgegb.dev/blog',
 }
 
-const postsLd = posts.map((post) => ({
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: post.title,
-  datePublished: post.date,
-  description: post.description,
-  url: `https://jorgegb.dev/blog#${post.slug}`,
-  keywords: post.tags.join(', '),
-  author: {
-    '@type': 'Person',
-    name: 'Jorge Garcia Brizuela',
-    url: 'https://jorgegb.dev',
-  },
-}))
+const postsLd = posts.map(blogPostingLd)
 ---
 
 <Layout title={pageTitle} description={pageDescription} canonicalUrl="https://jorgegb.dev/blog" jsonLd={[collectionLd, ...postsLd]}>
@@ -129,24 +118,7 @@ const postsLd = posts.map((post) => ({
                 {posts.length > 0 && (
                     <div class="grid md:grid-cols-2 gap-4">
                         {posts.map((post) => (
-                            <div class="card" id={post.slug}>
-                                <p class="text-xs font-mono text-secondary-text mb-2">
-                                    {post.date}
-                                </p>
-                                <h2 class="text-lg font-semibold mb-2">{post.title}</h2>
-                                <p class="text-sm text-secondary-text mb-3">{post.description}</p>
-                                <div class="flex items-center gap-2 mb-3 flex-wrap">
-                                    {post.tags.map((tag) => (
-                                        <span class="text-xs font-mono text-primary-blue border border-gray-300 px-2 py-0.5">{tag}</span>
-                                    ))}
-                                </div>
-                                <a
-                                    href={`/blog#${post.slug}`}
-                                    class="text-primary-blue hover:underline font-mono text-sm"
-                                >
-                                    Read more →
-                                </a>
-                            </div>
+                            <BlogCard post={post} headingLevel="h2" />
                         ))}
                     </div>
                 )}
