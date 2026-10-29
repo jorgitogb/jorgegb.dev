@@ -33,6 +33,12 @@ function htmlFor(page: string): string {
   return readFileSync(file, 'utf8')
 }
 
+function builtCss(): string {
+  const file = readdirSync(join(dist, '_astro')).find((f) => f.endsWith('.css'))
+  assert.ok(file, 'no built CSS found in dist/_astro')
+  return readFileSync(join(dist, '_astro', file), 'utf8')
+}
+
 function allTags(html: string, tag: string, attr: string): string[] {
   const tags = html.match(new RegExp(`<${tag}[^>]*${attr}[^>]*>`, 'g')) ?? []
   return tags
@@ -550,9 +556,7 @@ describe('WCAG AA contrast', () => {
   let css = ''
 
   before(() => {
-    const file = readdirSync(join(dist, '_astro')).find((f) => f.endsWith('.css'))
-    assert.ok(file, 'no built CSS in dist/_astro')
-    css = readFileSync(join(dist, '_astro', file), 'utf8')
+    css = builtCss()
   })
 
   // Hex tokens of one theme, from the standalone `:root{…}` / `.dark{…}` rules.
@@ -868,5 +872,37 @@ describe('blog cards link to the post pages', () => {
       attrValue(tag, 'content'),
       'Portfolio of Jorge García Brizuela, scientific software engineer at IPK Leibniz Institute',
     )
+  })
+})
+
+describe('anchor jumps clear the sticky header', () => {
+  // Header is ~4.1rem tall (py-3 + 40px logo + border); the story asks for ~1rem of gap.
+  const MIN_OFFSET_PX = 80
+
+  function toPx(value: string): number {
+    const m = value.match(/^([\d.]+)(rem|px)$/)
+    assert.ok(m, `unsupported scroll-padding-top value "${value}"`)
+    return m[2] === 'rem' ? parseFloat(m[1]) * 16 : parseFloat(m[1])
+  }
+
+  it('sets a root scroll-padding-top of at least header height + gap', () => {
+    const css = builtCss()
+    const rule = css.match(/(?:^|})html\{([^}]*)\}/g)?.join('') ?? ''
+    const value = rule.match(/scroll-padding-top:([^;}]+)/)?.[1]
+    assert.ok(value, 'html has no scroll-padding-top in the built CSS')
+    assert.ok(toPx(value.trim()) >= MIN_OFFSET_PX, `scroll-padding-top ${value} is below ${MIN_OFFSET_PX}px`)
+  })
+
+  it('every in-page #link on every built page points to an id on that page', () => {
+    const files = (readdirSync(dist, { recursive: true }) as string[]).filter((f) => f.endsWith('.html'))
+    assert.ok(files.length >= 8, `expected at least 8 built pages, found ${files.length}`)
+    for (const file of files) {
+      const html = readFileSync(join(dist, file), 'utf8')
+      const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]))
+      const targets = [...html.matchAll(/<a\b[^>]*\shref="#([^"]+)"/g)].map((m) => m[1])
+      for (const target of targets) {
+        assert.ok(ids.has(target), `${file}: href="#${target}" has no element with id="${target}"`)
+      }
+    }
   })
 })

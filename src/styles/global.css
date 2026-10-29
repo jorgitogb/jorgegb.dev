@@ -56,6 +56,11 @@
         --soft-yellow-bg: #fef9c3;
     }
 
+    /* Anchor jumps land below the sticky header (~4.1rem) plus a 1rem gap */
+    html {
+        scroll-padding-top: 5rem;
+    }
+
     /* Dark Mode */
     .dark {
         --background: #020617;
