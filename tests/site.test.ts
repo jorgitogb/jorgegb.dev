@@ -837,4 +837,36 @@ describe('blog cards link to the post pages', () => {
     const links = hrefs(section).filter((href) => href.startsWith('/blog/'))
     assert.deepEqual(links, cards)
   })
+
+  it('home hero keeps the name as h1 and states the niche in the subtitle', () => {
+    const html = htmlFor('')
+    const hero = html.match(
+      /<h1[^>]*>([\s\S]*?)<\/h1>\s*<p[^>]*>([\s\S]*?)<\/p>/,
+    )
+    assert.ok(hero, 'no <p> right after the home <h1>')
+    const text = (s: string) => s.replace(/\s+/g, ' ').trim()
+    assert.equal(text(hero[1]), 'Jorge García Brizuela')
+    assert.ok(
+      text(hero[2]).includes('Research data engineering for FAIR life-science data'),
+      `hero subtitle is "${text(hero[2])}"`,
+    )
+  })
+
+  it('home page no longer shows the old hero subtitle', () => {
+    const html = htmlFor('').replace(/\s+/g, ' ')
+    assert.ok(
+      !html.includes('Research Data & FAIR Infrastructures'),
+      'old subtitle "Research Data & FAIR Infrastructures" is still on /',
+    )
+  })
+
+  it('home title and meta description are unchanged by the hero copy', () => {
+    const html = htmlFor('')
+    assert.deepEqual(titles(html), ['Jorge GB — Software Developer'])
+    const tag = allTags(html, 'meta', 'name="description"')[0]
+    assert.equal(
+      attrValue(tag, 'content'),
+      'Portfolio of Jorge García Brizuela, scientific software engineer at IPK Leibniz Institute',
+    )
+  })
 })
