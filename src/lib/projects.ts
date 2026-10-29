@@ -31,6 +31,18 @@ function fetchTimeoutMs(): number {
     : DEFAULT_FETCH_TIMEOUT_MS
 }
 
+// A plain setTimeout keeps the event loop alive until it fires;
+// AbortSignal.timeout's timer doesn't, so a stubbed fetch with no I/O
+// gets cancelled by node:test before the timeout aborts it.
+function fetchTimeout(): { signal: AbortSignal; clear: () => void } {
+  const controller = new AbortController()
+  const timer = setTimeout(
+    () => controller.abort(new DOMException('The operation timed out.', 'TimeoutError')),
+    fetchTimeoutMs(),
+  )
+  return { signal: controller.signal, clear: () => clearTimeout(timer) }
+}
+
 function githubHeaders(): Record<string, string> {
   const headers: Record<string, string> = {
     Accept: 'application/vnd.github.v3+json',
@@ -91,10 +103,11 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   return cached<GitHubRepo>('github-repos', async () => {
     const url =
       `https://api.github.com/users/${GITHUB_USERNAME}/repos?per_page=100&sort=updated&type=owner`
+    const timeout = fetchTimeout()
     try {
       const res = await fetch(url, {
         headers: githubHeaders(),
-        signal: AbortSignal.timeout(fetchTimeoutMs()),
+        signal: timeout.signal,
       })
       if (!res.ok) {
         if (isRateLimited(res.status)) {
@@ -130,6 +143,8 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
     } catch (err) {
       console.warn('Failed to fetch GitHub repos:', err)
       return []
+    } finally {
+      timeout.clear()
     }
   })
 }
@@ -138,9 +153,10 @@ export async function fetchNpmPackages(): Promise<NpmPackage[]> {
   return cached<NpmPackage>('npm-packages', async () => {
     const url =
       `https://registry.npmjs.org/-/v1/search?text=maintainer:${NPM_AUTHOR}&size=50`
+    const timeout = fetchTimeout()
     try {
       const res = await fetch(url, {
-        signal: AbortSignal.timeout(fetchTimeoutMs()),
+        signal: timeout.signal,
       })
       if (!res.ok) {
         console.warn(`npm registry returned ${res.status}`)
@@ -170,6 +186,8 @@ export async function fetchNpmPackages(): Promise<NpmPackage[]> {
     } catch (err) {
       console.warn('Failed to fetch npm packages:', err)
       return []
+    } finally {
+      timeout.clear()
     }
   })
 }
