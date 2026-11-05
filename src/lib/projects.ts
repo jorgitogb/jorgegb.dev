@@ -153,6 +153,11 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
 // only through the authenticated GraphQL API, so keep this list in sync by hand.
 export const PINNED_REPOS = ['fairweaver', 'jorgegb.dev', 'watch-faces']
 
+/** Live repos when the GitHub API answered; otherwise the committed snapshot. */
+export function withSnapshot(live: GitHubRepo[], snapshot: GitHubRepo[]): GitHubRepo[] {
+  return live.length > 0 ? live : snapshot
+}
+
 export function pickPinned(repos: GitHubRepo[]): GitHubRepo[] {
   return PINNED_REPOS.flatMap((name) => repos.filter((r) => r.name === name))
 }

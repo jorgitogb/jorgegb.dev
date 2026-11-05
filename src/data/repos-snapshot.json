@@ -1,0 +1,42 @@
+[
+  {
+    "name": "sradi_metadata_to_schemaorg",
+    "description": null,
+    "htmlUrl": "https://github.com/jorgitogb/sradi_metadata_to_schemaorg",
+    "homepage": null,
+    "stargazersCount": 2,
+    "language": "Python"
+  },
+  {
+    "name": "fairweaver",
+    "description": null,
+    "htmlUrl": "https://github.com/jorgitogb/fairweaver",
+    "homepage": "https://fairweaver.vercel.app",
+    "stargazersCount": 1,
+    "language": "Python"
+  },
+  {
+    "name": "harness-template",
+    "description": "Bootstrap an AI dev workspace with SDD, TDD, and agent roles on any project",
+    "htmlUrl": "https://github.com/jorgitogb/harness-template",
+    "homepage": null,
+    "stargazersCount": 1,
+    "language": "TypeScript"
+  },
+  {
+    "name": "jorgegb.dev",
+    "description": null,
+    "htmlUrl": "https://github.com/jorgitogb/jorgegb.dev",
+    "homepage": null,
+    "stargazersCount": 0,
+    "language": "Astro"
+  },
+  {
+    "name": "watch-faces",
+    "description": null,
+    "htmlUrl": "https://github.com/jorgitogb/watch-faces",
+    "homepage": null,
+    "stargazersCount": 0,
+    "language": "PowerShell"
+  }
+]

@@ -4,8 +4,11 @@ import {
   describeProject,
   fetchGitHubRepos,
   fetchNpmPackages,
+  PINNED_REPOS,
   resetProjectsCache,
+  withSnapshot,
 } from '../src/lib/projects.ts'
+import { readFileSync } from 'node:fs'
 
 const originalFetch = globalThis.fetch
 
@@ -328,6 +331,42 @@ describe('describeProject', () => {
       assert.ok(
         !describeProject(name, desc, lang).includes('No description'),
       )
+    }
+  })
+})
+
+describe('withSnapshot', () => {
+  const repo = (name: string) => ({
+    name,
+    description: null,
+    htmlUrl: `https://github.com/jorgitogb/${name}`,
+    homepage: null,
+    stargazersCount: 0,
+    language: null,
+  })
+
+  it('returns the live repos untouched when there are some', () => {
+    const live = [repo('live')]
+    assert.deepEqual(withSnapshot(live, [repo('old')]), live)
+  })
+
+  it('returns the snapshot when the live list is empty (rate-limited build)', () => {
+    const snapshot = [repo('old')]
+    assert.deepEqual(withSnapshot([], snapshot), snapshot)
+  })
+
+  it('ships a snapshot with valid repos that includes every pinned repo', () => {
+    const snapshot = JSON.parse(
+      readFileSync(new URL('../src/data/repos-snapshot.json', import.meta.url), 'utf8'),
+    ) as Array<Record<string, unknown>>
+    for (const r of snapshot) {
+      assert.equal(typeof r.name, 'string')
+      assert.match(String(r.htmlUrl), /^https:\/\/github\.com\/jorgitogb\//)
+      assert.equal(typeof r.stargazersCount, 'number')
+    }
+    const names = snapshot.map((r) => r.name)
+    for (const pinned of PINNED_REPOS) {
+      assert.ok(names.includes(pinned), `snapshot is missing pinned repo ${pinned}`)
     }
   })
 })

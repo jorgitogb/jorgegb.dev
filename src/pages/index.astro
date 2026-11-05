@@ -1,10 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { describeProject, fetchGitHubRepos, pickPinned } from "../lib/projects";
+import { describeProject, fetchGitHubRepos, pickPinned, withSnapshot } from "../lib/projects";
+import repoSnapshot from "../data/repos-snapshot.json";
 import { posts } from "../data/blog-posts";
 import BlogCard from "../components/BlogCard.astro";
 
-const repos = pickPinned(await fetchGitHubRepos())
+const repos = pickPinned(withSnapshot(await fetchGitHubRepos(), repoSnapshot))
 
 const websiteLd = {
   '@context': 'https://schema.org',
