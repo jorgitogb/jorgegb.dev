@@ -149,6 +149,14 @@ export async function fetchGitHubRepos(): Promise<GitHubRepo[]> {
   })
 }
 
+// Repos pinned on github.com/jorgitogb, in display order. GitHub exposes pins
+// only through the authenticated GraphQL API, so keep this list in sync by hand.
+export const PINNED_REPOS = ['fairweaver', 'jorgegb.dev', 'watch-faces']
+
+export function pickPinned(repos: GitHubRepo[]): GitHubRepo[] {
+  return PINNED_REPOS.flatMap((name) => repos.filter((r) => r.name === name))
+}
+
 export async function fetchNpmPackages(): Promise<NpmPackage[]> {
   return cached<NpmPackage>('npm-packages', async () => {
     const url =

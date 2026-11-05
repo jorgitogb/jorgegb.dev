@@ -683,7 +683,7 @@ describe('WCAG AA contrast', () => {
   })
 
   it(`weekly downloads use the downloads token, which reaches ${AA}:1 on the card surface`, () => {
-    for (const page of ['', 'projects']) {
+    for (const page of ['projects']) {
       const spans = [...htmlFor(page).matchAll(/<span class="([^"]*)">↓/g)].map((m) => m[1])
       assert.ok(spans.length > 0, `/${page}: no weekly downloads found`)
       for (const classes of spans) {

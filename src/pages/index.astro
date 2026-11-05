@@ -1,16 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { describeProject, fetchGitHubRepos, fetchNpmPackages } from "../lib/projects";
+import { describeProject, fetchGitHubRepos, pickPinned } from "../lib/projects";
 import { posts } from "../data/blog-posts";
 import BlogCard from "../components/BlogCard.astro";
 
-const [repos, packages] = await Promise.all([fetchGitHubRepos(), fetchNpmPackages()])
-
-function formatDownloads(n: number): string {
-  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`
-  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}k`
-  return String(n)
-}
+const repos = pickPinned(await fetchGitHubRepos())
 
 const websiteLd = {
   '@context': 'https://schema.org',
@@ -499,7 +493,7 @@ const websiteLd = {
                     <div>
                         <h3 class="text-lg font-semibold mb-4 text-secondary-text">GitHub Projects</h3>
                         <div class="grid md:grid-cols-2 gap-4">
-                            {repos.slice(0, 4).map((repo) => (
+                            {repos.map((repo) => (
                                 <div class="card">
                                     <p class="font-mono text-sm text-secondary-text mb-1">
                                         <span class="text-primary-blue">$</span> gh repo {repo.name}
@@ -526,38 +520,12 @@ const websiteLd = {
                         </div>
                     </div>
                 )}
-                {packages.length > 0 && (
-                    <div class="mt-8">
-                        <h3 class="text-lg font-semibold mb-4 text-secondary-text">npm Packages</h3>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            {packages.slice(0, 2).map((pkg) => (
-                                <div class="card">
-                                    <p class="font-mono text-sm text-secondary-text mb-1">
-                                        <span class="text-primary-blue">$</span> npm i {pkg.name}
-                                        <span class="float-right text-downloads">↓ {formatDownloads(pkg.weeklyDownloads)}/wk</span>
-                                    </p>
-                                    <p class="mb-3">{describeProject(pkg.name, pkg.description, null)}</p>
-                                    <p class="text-xs font-mono text-secondary-text mb-3">v{pkg.version}</p>
-                                    <a
-                                        href={`https://www.npmjs.com/package/${pkg.name}`}
-                                        target="_blank"
-                                        rel="noopener"
-                                        class="text-primary-blue hover:underline font-mono text-sm"
-                                    >
-                                        View on npm →
-                                    </a>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-                {repos.length === 0 && packages.length === 0 && (
+                {repos.length === 0 && (
                     <div class="card text-center">
                         <p class="text-secondary-text">
                             No projects to display. Check my
                             {' '}<a href="https://github.com/jorgitogb" target="_blank" rel="noopener" class="text-primary-blue hover:underline">GitHub</a>
-                            {' '}or{' '}
-                            <a href="https://www.npmjs.com/~jorgegb" target="_blank" rel="noopener" class="text-primary-blue hover:underline">npm</a>.
+                            .
                         </p>
                     </div>
                 )}
